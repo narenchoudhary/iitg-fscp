@@ -47,3 +47,11 @@ class LoginView(View):
                 return render(request, self.template_name, dict(form=form))
         else:
             return render(request, self.template_name, dict(form=form))
+
+
+class LogoutView(View):
+    http_method_names = ['get', 'head', 'options']
+
+    def get(self, request):
+        auth.logout(request=request)
+        return redirect('login')

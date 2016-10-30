@@ -18,7 +18,10 @@ class Student(models.Model):
     """
     Student model class
     """
-    user_profile = models.OneToOneField(UserProfile, null=False, blank=False)
+    user_profile = models.OneToOneField(
+        UserProfile, null=False, blank=False,
+        limit_choices_to={'user_type': 'student'}
+    )
     roll_no = models.DecimalField(
         max_digits=10, decimal_places=0, unique=True, null=False, blank=False)
     web_mail = models.EmailField(null=True, blank=False)
@@ -36,7 +39,10 @@ class Faculty(models.Model):
     """
     Faculty model class
     """
-    user_profile = models.OneToOneField(UserProfile, null=False, blank=False)
+    user_profile = models.OneToOneField(
+        UserProfile, null=False, blank=False,
+        limit_choices_to={'user_type': 'faculty'}
+    )
     web_mail = models.EmailField(null=True, blank=False)
     full_name = models.CharField(max_length=100, null=True, blank=False)
     department = models.CharField(max_length=100, choices=DEPARTMENT,
