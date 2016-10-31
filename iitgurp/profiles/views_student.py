@@ -42,6 +42,7 @@ class StudentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
     A view that updates instance of Student model.
     """
+    login_url = reverse_lazy('login')
     template_name = 'profiles/student/student_update.html'
     model = Student
     fields = ['hostel', 'room_no', 'mobile_campus', 'alternate_email']

@@ -45,6 +45,7 @@ class FacultyUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
     A view that updates instance of Faculty model.
     """
+    login_url = reverse_lazy('login')
     template_name = 'profiles/faculty/faculty_update.html'
     model = Faculty
     fields = ['web_mail', 'department', 'room_no']

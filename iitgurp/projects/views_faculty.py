@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
@@ -51,7 +52,17 @@ class ProjectUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'projects/faculty/project_update.html'
 
     def test_func(self):
-        return self.request.user.user_type == 'faculty'
+        is_faculty = self.request.user.user_type == 'faculty'
+        if not is_faculty:
+            return False
+        faculty = get_object_or_404(
+            Faculty, user_profile__username=self.request.user.username
+        )
+        project = get_object_or_404(Project, id=self.kwargs['pk'])
+        is_owner = project.faculty == faculty
+        if not is_owner:
+            return False
+        return True
 
     def get_success_url(self):
         return reverse_lazy('projects:fac-project-detail',
@@ -75,13 +86,27 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
         )
 
 
-class ProjectDetail(DetailView):
+class ProjectDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
     View class which renders details of a Project
     """
+    login_url = reverse_lazy('login')
     model = Project
     template_name = 'projects/faculty/project_detail.html'
     context_object_name = 'project'
+
+    def test_func(self):
+        is_faculty = self.request.user.user_type == 'faculty'
+        if not is_faculty:
+            return False
+        faculty = get_object_or_404(
+            Faculty, user_profile__username=self.request.user.username
+        )
+        project = get_object_or_404(Project, id=self.kwargs['pk'])
+        is_owner = project.faculty == faculty
+        if not is_owner:
+            return False
+        return True
 
     def get_context_data(self, **kwargs):
         context = super(ProjectDetail, self).get_context_data(**kwargs)
