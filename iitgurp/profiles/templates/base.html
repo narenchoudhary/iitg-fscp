@@ -38,5 +38,12 @@
     <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     {{ form.media.js }}
+    <script src="{% static 'js/faculty_update_ajax.js' %}"></script>
+    <script>
+        $('#faculty-profile-form').on('submit', function (e) {
+            e.preventDefault();
+            update_profile();
+        })
+    </script>
 </body>
 </html>
