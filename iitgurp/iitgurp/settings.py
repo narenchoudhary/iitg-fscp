@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'debug_toolbar',
     'crispy_forms',
     'django_select2',
     'profiles',
@@ -54,6 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'iitgurp.urls'
@@ -185,8 +188,18 @@ try:
 except ImportError:
     pass
 
+# django-select2 configuration
+# http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.JS
 JS = 'static/js/select2.min.css'
+# http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.CSS
 CSS = 'static/css/select2.min.css'
 
+# django-crispy-forms configuration
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#setting-media-files
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+# django-debug-toolbar configuration
+# https://django-debug-toolbar.readthedocs.io/en/stable/installation.html#internal-ips
+INTERNAL_IPS = ['127.0.0.1']
