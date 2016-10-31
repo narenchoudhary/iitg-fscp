@@ -1,8 +1,7 @@
 {% extends 'base_faculty.html' %}
 
 {% block content %}
-<p>Update Profile</p>
-<form action="" method="post">{% csrf_token %}
+<form action="" method="post" id="faculty-profile-form">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Update" />
 </form>
