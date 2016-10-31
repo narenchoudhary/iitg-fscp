@@ -1,0 +1,30 @@
+{% extends 'base_faculty.html' %}
+
+{% block content %}
+<p>Project List</p>
+<br>
+<table class="table table-bordered table-responsive table-hover">
+    {% for project in project_list %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{project.title}}</td>
+            <td>
+                <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-detail' project.id %}">
+                    Detail
+                </a>
+            </td>
+            <td>
+                <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-update' project.id %}">
+                    Update
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<br>
+<p>
+    <a class="btn btn-primary" href="{% url 'projects:fac-project-create'%}">
+        Create new Project
+    </a>
+</p>
+{% endblock %}

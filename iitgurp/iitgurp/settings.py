@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
+    'django_select2',
     'profiles',
+    'projects',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -182,3 +184,9 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+JS = 'static/js/select2.min.css'
+CSS = 'static/css/select2.min.css'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_FAIL_SILENTLY = not DEBUG

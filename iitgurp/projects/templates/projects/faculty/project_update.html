@@ -1,0 +1,15 @@
+{% extends 'base_faculty.html' %}
+
+{% block custom_styles %}
+<style type="text/css">select {  width: 500px; }</style>
+{% endblock %}
+
+{% block content %}
+<p>Create a new Project</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base_student.html'%}
+
+{% block content %}
+<p>Project List</p>
+<table class="table table-bordered table-responsive table-hover">
+    {% for project in project_list %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{project.title}}</td>
+            <td>
+                <a class="btn-sm btn-primary" href="{% url 'projects:stud-project-detail' project.id %}">
+                    Detail
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

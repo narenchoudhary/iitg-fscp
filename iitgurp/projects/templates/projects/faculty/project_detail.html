@@ -1,0 +1,33 @@
+{% extends 'base_faculty.html' %}
+
+{% block content %}
+<p><strong><u>Project Details</u></strong></p>
+
+<p><strong>Title</strong>: {{project.title}}</p>
+<p><strong>Description</strong>: {{project.description}}</p>
+<p><strong>Skills</strong>:
+    {% for skill in project.skills.all %}
+        {{skill.name}} ({{skill.area}}),
+    {% endfor %}
+</p>
+<p>
+    Is something wrong?
+    <a href="{% url 'projects:fac-project-update' project.id %}">
+        <button>Update</button>
+    </a>
+</p>
+<hr>
+<p>Total applicants: {{stud_rel_list.count }}</p>
+<table class="table table-bordered table-hover">
+{% for stud_rel in stud_rel_list %}
+    <tr>
+        <td>{{stud_rel.student.web_mail}}</td>
+        <td>{{stud_rel.student.full_name}}</td>
+        <td>{{stud_rel.student.roll_no}}</td>
+        <td>{{stud_rel.student.mobile_campus}}</td>
+        <td>{{stud_rel.creation_datetime}}</td>
+    </tr>
+{% endfor %}
+</table>
+<hr>
+{% endblock %}
