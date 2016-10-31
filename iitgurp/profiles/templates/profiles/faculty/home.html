@@ -1,15 +1,23 @@
+{% extends 'base_faculty.html' %}
+
+{%block content%}
 <p>Home</p>
 {{fac.web_mail}}
 <br>
+<hr>
 <p>Profile Links</p>
 <ol>
     <li><a href="{% url 'fac-detail'%}">Detail</a></li>
     <li><a href="{% url 'fac-update'%}">Update</a></li>
 </ol>
 <br>
+<hr>
 <p>Projects Links</p>
 <ol>
     <li><a href="{% url 'projects:fac-project-create' %}">Create Project</a></li>
     <li><a href="{% url 'projects:fac-project-list' %}">Project List</a></li>
 </ol>
-<a href="{% url 'logout' %}">Logout</a>
+<hr>
+<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}

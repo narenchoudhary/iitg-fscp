@@ -1,1 +1,7 @@
-{{fac.web_mail}}
+{% extends 'base_faculty.html' %}
+
+{% block content %}
+<p>Profile Details</p>
+<p>{{fac.web_mail}}</p>
+<p><a class="btn-sm btn-primary" href="{% url 'fac-update' %}">Update Profile</a></p>
+{% endblock %}

@@ -12,6 +12,7 @@ class Home(LoginRequiredMixin, UserPassesTestMixin, View):
     """
     A view that renders home page of faculty users.
     """
+    login_url = reverse_lazy('login')
     template_name = 'profiles/faculty/home.html'
 
     def test_func(self):

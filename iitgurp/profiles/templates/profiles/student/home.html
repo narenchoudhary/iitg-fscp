@@ -1,2 +1,10 @@
-<a href="{% url 'stud-detail'%}">Detail</a>
-<a href="{% url 'stud-update'%}">Update</a>
+{% extends 'base_student.html' %}
+
+{% block content %}
+<p>Home</p>
+
+<p><a href="{% url 'stud-detail'%}">Detail</a></p>
+<p><a href="{% url 'stud-update'%}">Update</a></p>
+<hr>
+<p><a href="{% url 'projects:stud-project-list' %}">Project List</a></p>
+{% endblock %}

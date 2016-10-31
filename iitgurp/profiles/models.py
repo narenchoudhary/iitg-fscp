@@ -2,10 +2,12 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 from .constants import *
 
 
+@python_2_unicode_compatible
 class UserProfile(AbstractUser):
     """
     UserProfile model class
@@ -13,7 +15,11 @@ class UserProfile(AbstractUser):
     user_type = models.CharField(max_length=20, choices=USER_TYPE,
                                  null=False, blank=False)
 
+    def __str__(self):
+        return self.username
 
+
+@python_2_unicode_compatible
 class Student(models.Model):
     """
     Student model class
@@ -34,7 +40,11 @@ class Student(models.Model):
     mobile_campus = models.CharField(max_length=12, null=True, blank=True)
     alternate_email = models.EmailField(null=True, blank=True)
 
+    def __str__(self):
+        return self.web_mail
 
+
+@python_2_unicode_compatible
 class Faculty(models.Model):
     """
     Faculty model class
@@ -48,3 +58,6 @@ class Faculty(models.Model):
     department = models.CharField(max_length=100, choices=DEPARTMENT,
                                   null=True, blank=True)
     room_no = models.CharField(max_length=7, null=True, blank=True)
+
+    def __str__(self):
+        return self.web_mail
