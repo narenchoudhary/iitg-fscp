@@ -5,6 +5,7 @@
 
 <p><strong>Title</strong>: {{project.title}}</p>
 <p><strong>Description</strong>: {{project.description}}</p>
+<p><strong>Hours/Week</strong>: {{project.hours_per_week}} hour(s)</p>
 <p><strong>Skills</strong>:
     {% for skill in project.skills.all %}
         {{skill.name}} ({{skill.area}}),

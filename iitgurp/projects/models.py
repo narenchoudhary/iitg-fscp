@@ -22,6 +22,10 @@ class Project(models.Model):
     faculty = models.ForeignKey(Faculty, null=True, blank=False)
     title = models.CharField(max_length=70, blank=False, null=False)
     description = models.CharField(max_length=300, blank=True, null=True)
+    hours_per_week = models.DecimalField(
+        max_digits=3, decimal_places=1, null=False, blank=False, default=2,
+        verbose_name='Hours Per Week'
+    )
     skills = models.ManyToManyField(Skill, blank=True)
     # dates
     creation_datetime = models.DateTimeField(null=True, blank=True)

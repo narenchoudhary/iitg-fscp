@@ -11,7 +11,7 @@ class ProjectCreateForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'skills']
+        fields = ['title', 'description', 'hours_per_week', 'skills']
         widgets = {
             'skills': ModelSelect2MultipleWidget(
                 queryset=Skill.objects.all().order_by('-name'),
