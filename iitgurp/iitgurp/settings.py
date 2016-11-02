@@ -190,9 +190,9 @@ except ImportError:
 
 # django-select2 configuration
 # http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.JS
-JS = 'static/js/select2.min.css'
+SELECT2_JS = 'js/select2.min.js'
 # http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.CSS
-CSS = 'static/css/select2.min.css'
+SELECT2_CSS = 'css/select2.min.css'
 
 # django-crispy-forms configuration
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
