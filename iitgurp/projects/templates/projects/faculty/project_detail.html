@@ -11,6 +11,16 @@
         {{skill.name}} ({{skill.area}}),
     {% endfor %}
 </p>
+<p>Other requirements: {{project.requirements}}</p>
+<p>Start Date : {{project.start_date}}</p>
+<p>End Date : {{project.end_date}}</p>
+
+{% if project.is_closed %}
+    <p> Application for project closed on {{project.closing_datetime}}.</p>
+{% else %}
+    <p> Application for project will close on {{project.closing_datetime}}</p>
+{% endif%}
+
 <p>
     Is something wrong?
     <a href="{% url 'projects:fac-project-update' project.id %}">

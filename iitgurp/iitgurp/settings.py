@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     'django_select2',
+    'bootstrap3_datetime',
     'profiles',
     'projects',
 ]
