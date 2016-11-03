@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect
+from django.utils.http import is_safe_url
 from django.views.generic.base import View
 
 from .forms import LoginForm
@@ -11,8 +12,10 @@ class LoginView(View):
     """
     template_name = 'profiles/login.html'
     port = 995
+    next = ''
 
     def get(self, request):
+        self.next = request.GET.get('next', '')
         if request.user.is_authenticated():
             if request.user.user_type == 'admin':
                 return None
@@ -20,28 +23,32 @@ class LoginView(View):
                 return redirect('fac-home')
             elif request.user.user_type == 'student':
                 return redirect('stud-home')
-        args = dict(form=LoginForm(None))
+        args = dict(form=LoginForm(None), next=self.next)
         return render(request, self.template_name, args)
 
     def post(self, request):
+        redirect_to = request.POST.get('next', self.next)
+        print(redirect_to)
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             server = form.cleaned_data.get('login_server')
 
-            user = auth.authenticate(username=username, password=password,
-                                     server=server, port=self.port)
+            user = auth.authenticate(username=username, password=password)
             if user is not None:
                 auth.login(request=request, user=user)
-                if user.user_type == 'faculty':
-                    return redirect('fac-home')
-                elif user.user_type == 'student':
-                    return redirect('stud-home')
+                if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    if user.user_type == 'faculty':
+                        return redirect('fac-home')
+                    elif user.user_type == 'student':
+                        return redirect('stud-home')
+                    else:
+                        form.add_error(None, 'No such user exists.')
+                        return render(request, self.template_name,
+                                      dict(form=form))
                 else:
-                    form.add_error(None, 'No such user exists.')
-                    return render(request, self.template_name,
-                                  dict(form=form))
+                    return redirect(redirect_to)
             else:
                 form.add_error(None, 'No such user exists.')
                 return render(request, self.template_name, dict(form=form))
