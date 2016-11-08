@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
 from .constants import *
@@ -40,8 +41,14 @@ class Student(models.Model):
     mobile_campus = models.CharField(max_length=12, null=True, blank=True)
     alternate_email = models.EmailField(null=True, blank=True)
 
+    last_updated = models.DateTimeField(null=True, blank=True)
+
     def __str__(self):
         return self.web_mail
+
+    def save(self, **kwargs):
+        self.last_updated = timezone.now()
+        super(Student, self).save(**kwargs)
 
 
 @python_2_unicode_compatible
@@ -59,5 +66,11 @@ class Faculty(models.Model):
                                   null=True, blank=True)
     room_no = models.CharField(max_length=7, null=True, blank=True)
 
+    last_updated = models.DateTimeField(null=True, blank=True)
+
     def __str__(self):
         return self.web_mail
+
+    def save(self, **kwargs):
+        self.last_updated = timezone.now()
+        super(Faculty, self).save(**kwargs)
