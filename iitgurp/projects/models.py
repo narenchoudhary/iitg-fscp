@@ -48,10 +48,13 @@ class Project(models.Model):
     # deletion status
     is_deleted = models.BooleanField(default=False, blank=True)
     deletion_datetime = models.DateTimeField(null=True, blank=True)
+    # applicants
+    applicants = models.ManyToManyField(
+        Student, through='ProjectStudentRelation')
 
     @property
     def is_closed(self):
-        return self.creation_datetime < timezone.now()
+        return self.closing_datetime < timezone.now()
 
     @property
     def skill_count(self):
@@ -69,9 +72,12 @@ class Project(models.Model):
 
 @python_2_unicode_compatible
 class ProjectStudentRelation(models.Model):
-    project = models.ForeignKey(Project, null=False, blank=False)
-    student = models.ForeignKey(Student, null=False, blank=False)
+    project = models.ForeignKey(Project, null=False, blank=False,
+                                on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, null=False, blank=False,
+                                on_delete=models.CASCADE)
     creation_datetime = models.DateTimeField(null=False, blank=False)
+    last_updated = models.DateTimeField(null=True, blank=True)
     # shortlist status
     is_shortlisted = models.NullBooleanField(default=None, blank=False)
     shortlist_datetime = models.DateTimeField(null=True, blank=True)
@@ -97,4 +103,5 @@ class ProjectStudentRelation(models.Model):
     def save(self, **kwargs):
         if not self.id:
             self.creation_datetime = timezone.now()
+        self.last_updated = timezone.now()
         super(ProjectStudentRelation, self).save(**kwargs)
