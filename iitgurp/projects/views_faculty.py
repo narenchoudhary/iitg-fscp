@@ -2,13 +2,14 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import (CreateView, DetailView, FormView, ListView,
+                                  UpdateView, View)
 
 from profiles.models import Faculty
 
-from .forms import ProjectCreateForm
+from .forms import ProjectCreateForm, ProjectSearchForm
 from .models import Project, ProjectStudentRelation
 
 
@@ -114,3 +115,26 @@ class ProjectDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             project=self.object
         )
         return context
+
+
+class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
+    login_url = reverse_lazy('login')
+    template_name = 'projects/faculty/project_search.html'
+    form_class = ProjectSearchForm
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+    def form_valid(self, form):
+        title = form.cleaned_data.get('title', '')
+        skills = form.cleaned_data.get('skills', [])
+        if skills:
+            project_list = Project.objects.filter(
+                title__icontains=title, skills__in=skills
+            )
+        else:
+            project_list = Project.objects.filter(
+                title__icontains=title
+            )
+        args = dict(project_list=project_list, form=form, results=True)
+        return render(self.request, self.template_name, args)

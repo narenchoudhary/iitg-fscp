@@ -1,0 +1,50 @@
+{% extends 'base_faculty.html' %}
+
+{% block title %}Faculty | Search {% endblock %}
+
+{% block custom_styles %}
+<style type="text/css">select {  width: 500px; }</style>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Search" />
+    </form>
+    <hr>
+
+    {% if results and project_list.count < 1 %}
+        <p><strong>No matching projects found.</strong></p>
+    {% endif %}
+
+    {% if project_list.count > 0%}
+    <table class="table table-bordered table-responsive table-hover">
+        <thead>
+            <tr>
+                <td>Sr. No.</td>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Closing Date</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in project_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{project.title}}</td>
+                <td>{{project.description}}</td>
+
+                <td {% if project.is_closed %}class="danger"{% endif %}>
+                    {% if project.is_closed %}
+                        {{project.closing_datetime}} (Closed)
+                    {% else %}
+                        {{project.closing_datetime}}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

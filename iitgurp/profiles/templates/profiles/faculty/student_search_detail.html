@@ -1,0 +1,43 @@
+{% extends 'base_faculty.html' %}
+
+{% block title %}Faculty | Search{% endblock %}
+
+{% block content %}
+
+    <p><strong>Faculty Detail</strong></p>
+    <p>Name : {{ stud.full_name }}</p>
+    <p>Web Mail : {{ stud.web_mail }}</p>
+
+    <hr>
+
+    {% if stud_rel_list.count < 1 %}
+        <p><strong>No project has been posted from this account.</strong></p>
+    {% endif %}
+
+    {% if stud_rel_list.count > 0 %}
+    <p>Project List</p>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <td>Sr. No</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+            {% for stud_rel in stud_rel_list %}
+                <tbody>
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{stud_rel.project.title}}</td>
+                        <td>{{stud_rel.project.description}}</td>
+                        <td>{{stud_rel.status}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base_faculty.html' %}
+
+{% block title %}Faculty | Search{% endblock %}
+
+{% block content %}
+    <p><strong>Faculty Detail</strong></p>
+    <p>Name : {{ fac.full_name }}</p>
+    <p>Department: {{ fac.department }}</p>
+    <p>Webmail : {{ fac.web_mail }}</p>
+    <hr>
+    {% if project_list.count < 1 %}
+        <p><strong>No project has been posted from this account.</strong></p>
+    {% endif %}
+    {% if project_list.count > 0 %}
+    <p>Project List</p>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <td>Sr. No</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>Closing Date</td>
+                    </tr>
+                </thead>
+            {% for project in project_list %}
+                <tbody>
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{project.title}}</td>
+                        <td>{{project.description}}</td>
+                        <td {% if project.is_closed %}class="danger"{% endif %}>
+                            {% if project.is_closed %}
+                                {{project.closing_datetime}} (Closed)
+                            {% else %}
+                                {{project.closing_datetime}}
+                            {% endif%}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

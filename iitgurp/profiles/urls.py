@@ -22,7 +22,15 @@ urlpatterns = [
     url(r'^faculty/update/$', views_faculty.FacultyUpdate.as_view(),
         name='fac-update'),
     url(r'^faculty/student/(?P<pk>\d+)/detail/$',
-        views_faculty.StudentDetail.as_view(), name='fac-stduent-detail'),
-    url(r'^faculty/search/faulty/', views_faculty.FacultySearch.as_view(),
-        name='fac-search-faculty'),
+        views_faculty.StudentDetail.as_view(), name='fac-student-detail'),
+    url(r'^faculty/search/faulty/$', views_faculty.FacultySearch.as_view(),
+        name='fac-faculty-search'),
+    url(r'^faculty/search/faulty/detail/(?P<pk>\d+)/$',
+        views_faculty.FacultySearchDetail.as_view(),
+        name='fac-search-faculty-detail'),
+    url(r'^faculty/search/student/$', views_faculty.SearchStudent.as_view(),
+        name='fac-student-search'),
+    url(r'^faculty/search/student/detail/(?P<pk>\d+)/$',
+        views_faculty.StudentSearchDetail.as_view(),
+        name='fac-search-student-detail')
 ]

@@ -1,0 +1,43 @@
+{% extends 'base_faculty.html' %}
+
+{% block title %}Faculty | Search{% endblock %}
+
+{% block content %}
+
+    <form action="" method="post" id="search-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Search" />
+    </form>
+
+    <hr>
+
+    {% if results and  stud_list.count < 1 %}
+        <p><strong>No results matching your query was found.</strong></p>
+    {% endif %}
+
+    {% if stud_list.count > 0 %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Name</th>
+                <th>Web Mail</th>
+                <th>Detail</th>
+            </tr>
+            {% for stud in stud_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{stud.full_name}}</td>
+                <td>{{stud.web_mail}}</td>
+                <td>
+                    <a class="btn-sm btn-primary" href="{% url 'fac-search-student-detail' stud.id %}">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

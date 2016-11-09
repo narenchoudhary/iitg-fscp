@@ -13,6 +13,8 @@ urlpatterns = [
         views_faculty.ProjectDetail.as_view(), name='fac-project-detail'),
     url(r'^faculty/projects/update/(?P<pk>\d+)/$',
         views_faculty.ProjectUpdate.as_view(), name='fac-project-update'),
+    url(r'^faculty/projects/search/$',
+        views_faculty.SearchProject.as_view(), name='fac-project-search'),
 
     url(r'^student/projects/list/$',
         views_student.ProjectList.as_view(), name='stud-project-list'),
@@ -24,6 +26,6 @@ urlpatterns = [
     url(r'^student/projects/deapply/(?P<pk>\d+)/$',
         views_student.ProjectStudRelDelete.as_view(),
         name='stud-project_stud_rel-delete'),
-    url(r'^student/projects/search',
-        views_student.SearchProject.as_view(), name='stud-project-search')
+    url(r'^student/projects/search/',
+        views_student.SearchProject.as_view(), name='stud-project-search'),
 ]

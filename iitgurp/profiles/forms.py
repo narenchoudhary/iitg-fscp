@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 
 from .constants import LOGIN_SERVER, DEPARTMENT
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput)
@@ -25,3 +26,8 @@ class FacultySearchForm(forms.Form):
                                 help_text='Type name or part of name')
     department = forms.ChoiceField(choices=DEPARTMENT_BLANK,
                                    required=False, initial='')
+
+
+class StudentSearch(forms.Form):
+    full_name = forms.CharField(max_length=50, required=True,
+                                help_text='Name or part of name')
