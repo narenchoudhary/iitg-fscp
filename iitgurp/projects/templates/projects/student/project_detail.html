@@ -1,26 +1,38 @@
 {% extends 'base_student.html'%}
 
-{% block content %}
-<p>Project Details</p>
+{% block title %}Student | Project Detail{% endblock %}
 
-<p><strong>Title</strong>: {{project.title}}</p>
-<p><strong>Description</strong>: {{project.description}}</p>
-<p><strong>Hours/Week</strong>: {{project.hours_per_week}} hour(s)</p>
-<p><strong>Skills</strong>:
-    {% for skill in project.skills.all %}
-        {{skill.name}} ({{skill.area}}),
-    {% endfor %}
-</p>
-<p>
-    {% if stud_rel %}
-        You applied for this project on {{stud_rel.creation_datetime}}.
-    {% else %}
-        You haven't applied for this project.
-        <br>
-        <a href="{% url 'projects:stud-project_stud_rel-create' project.id %}">
-            <button id="applyButton">Apply</button>
+{% block content %}
+    <p>Project Details</p>
+
+    <p><strong>Title</strong>: {{project.title}}</p>
+    <p>
+        Posted By:
+        <a href="{% url 'stud-fac-detail' project.faculty.id %}">
+            {{project.faculty.full_name}}
         </a>
-    {% endif %}
-</p>
-<hr>
+    </p>
+    <p><strong>Description</strong>: {{project.description}}</p>
+    <p><strong>Hours/Week</strong>: {{project.hours_per_week}} hour(s)</p>
+    <p><strong>Skills</strong>:
+        {% for skill in project.skills.all %}
+            {{skill.name}} ({{skill.area}}),
+        {% endfor %}
+    </p>
+    <p>
+        {% if stud_rel %}
+            You applied for this project on {{stud_rel.creation_datetime}}.
+            <br>
+            <a href="{% url 'projects:stud-project_stud_rel-delete' project.id %}">
+                <button id="deleteButton">Remove Application</button>
+            </a>
+        {% else %}
+            You haven't applied for this project.
+            <br>
+            <a href="{% url 'projects:stud-project_stud_rel-create' project.id %}">
+                <button id="applyButton">Apply</button>
+            </a>
+        {% endif %}
+    </p>
+    <hr>
 {% endblock %}

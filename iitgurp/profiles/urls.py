@@ -11,10 +11,18 @@ urlpatterns = [
         name='stud-detail'),
     url(r'^student/update/$', views_student.StudentUpdate.as_view(),
         name='stud-update'),
+    url(r'^student/faculty/search', views_student.FacultySearch.as_view(),
+        name='stud-fac-search'),
+    url(r'^student/faculty/(?P<pk>\d+)/detail/$',
+        views_student.FacultyDetail.as_view(), name='stud-fac-detail'),
 
     url(r'^faculty/home/$', views_faculty.Home.as_view(), name='fac-home'),
     url(r'^faculty/detail/$', views_faculty.FacultyDetail.as_view(),
         name='fac-detail'),
     url(r'^faculty/update/$', views_faculty.FacultyUpdate.as_view(),
         name='fac-update'),
+    url(r'^faculty/student/(?P<pk>\d+)/detail/$',
+        views_faculty.StudentDetail.as_view(), name='fac-stduent-detail'),
+    url(r'^faculty/search/faulty/', views_faculty.FacultySearch.as_view(),
+        name='fac-search-faculty'),
 ]

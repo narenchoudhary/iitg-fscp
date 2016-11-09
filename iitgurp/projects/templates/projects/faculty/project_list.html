@@ -1,25 +1,47 @@
 {% extends 'base_faculty.html' %}
 
+{% block title %}Faculty | Project List{% endblock %}
+
 {% block content %}
 <p>Project List</p>
 <br>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>Sr. No</td>
+                    <td>Title</td>
+                    <td>Applicants</td>
+                    <td>Closing Date</td>
+                    <td>Detail</td>
+                    <td>Update</td>
+                </tr>
+            </thead>
         {% for project in project_list %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{project.title}}</td>
-                <td>
-                    <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-detail' project.id %}">
-                        Detail
-                    </a>
-                </td>
-                <td>
-                    <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-update' project.id %}">
-                        Update
-                    </a>
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{project.title}}</td>
+                    <td>{{project.applicants.count}}</td>
+                    <td>
+                        {% if project.is_closed %}
+                            {{project.closing_datetime}} (Closed)
+                        {% else %}
+                            {{project.closing_datetime}}
+                        {% endif%}
+                    </td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-detail' project.id %}">
+                            Detail
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="{% url 'projects:fac-project-update' project.id %}">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
         {% endfor %}
     </table>
 </div>

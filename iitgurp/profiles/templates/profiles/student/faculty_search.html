@@ -1,0 +1,38 @@
+{% extends 'base_student.html' %}
+
+{% block title %}Student | Search{% endblock %}
+
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Search" />
+    </form>
+    <hr>
+    {% if results and fac_list.count < 1 %}
+        <p><strong>No matching faculty found.</strong></p>
+    {% endif %}
+    {% if fac_list.count > 0 %}
+    <div class="">
+        <table class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <td>Name of Faculty</td>
+                    <td>Department</td>
+                    <td>Link to Profile</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fac in fac_list %}
+                <tr>
+                    <td>{{ fac.full_name }}</td>
+                    <td>{{ fac.department }}</td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="{% url 'stud-fac-detail' fac.id %}">Detail</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

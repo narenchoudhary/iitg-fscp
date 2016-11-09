@@ -17,6 +17,24 @@
                     <li><a href="{% url 'stud-home' %}">Home</a></li>
                     <li><a href="{% url 'stud-detail'%}">Profile</a></li>
                     <li><a href="{% url 'projects:stud-project-list' %}">Projects</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            Search <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'stud-fac-search' %}">
+                                    Search Faculty
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'projects:stud-project-search' %}">
+                                    Search Projects
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 </ul>
             </div>

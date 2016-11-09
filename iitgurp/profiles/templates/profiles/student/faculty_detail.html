@@ -1,0 +1,27 @@
+{% extends 'base_student.html' %}
+
+{% block title %}Student | Faculty Detail{% endblock %}
+
+{% block content %}
+    <p><strong>Faculty Detail</strong></p>
+    <p>WebMail : {{fac.web_mail}}</p>
+    <p>Department : {{ fac.department }}</p>
+    <hr>
+    <p>Projects floated by {{fac.full_name}}</p>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            {% for project in project_list %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{project.title}}</td>
+                    <td>
+                        <a class="btn-sm btn-primary" href="{% url 'projects:stud-project-detail' project.id %}">
+                            Detail
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <br>
+{% endblock %}

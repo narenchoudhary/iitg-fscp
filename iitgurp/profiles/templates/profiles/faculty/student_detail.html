@@ -1,0 +1,25 @@
+{% extends 'base_faculty.html'%}
+
+{% block title %}Faculty | Student Detail{% endblock %}
+
+{% block content %}
+<p>Student Details</p>
+<p>Name : {{stud.full_name}}</p>
+
+{% if stud_rel_list.count > 0 %}
+<p>Projects completed or currently undertaken by {{stud.full_name}}.</p>
+<table class="table table-bordered table-responsive table-hover">
+    {% for stud_rel in stud_rel_list %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{stud_rel.project.title}}</td>
+            <td>{{stud_rel.project.faculty.full_name}}</td>
+            <td>{{stud.status}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>{{stud.full_name}} has not undertaken any project yet.</p>
+{% endif %}
+
+{% endblock %}

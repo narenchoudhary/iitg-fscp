@@ -1,5 +1,7 @@
 {% extends 'base_faculty.html' %}
 
+{% block title %}Faculty | Create Project{% endblock %}
+
 {% block custom_styles %}
 <style type="text/css">select {  width: 500px; }</style>
 {% endblock %}
@@ -14,6 +16,3 @@
 </form>
 {% endblock %}
 
-{% block end_scripts %}
-    {{form.media}}
-{% endblock %}

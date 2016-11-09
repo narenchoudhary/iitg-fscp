@@ -2,8 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
-from .constants import LOGIN_SERVER
-
+from .constants import LOGIN_SERVER, DEPARTMENT
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
@@ -17,3 +16,12 @@ class LoginForm(forms.Form):
         if login_server not in valid_servers:
             raise ValidationError(_('Invalid Login Server'), code='invalid')
         return login_server
+
+
+class FacultySearchForm(forms.Form):
+    DEPARTMENT_BLANK = DEPARTMENT + [('', '-----')]
+    full_name = forms.CharField(max_length=50, required=True,
+                                label='Name of Faculty',
+                                help_text='Type name or part of name')
+    department = forms.ChoiceField(choices=DEPARTMENT_BLANK,
+                                   required=False, initial='')

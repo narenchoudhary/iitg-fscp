@@ -1,5 +1,7 @@
 {% extends 'base_student.html'%}
 
+{% block title %}Student | Project List{% endblock %}
+
 {% block content %}
 <p>Project List</p>
 <table class="table table-bordered table-responsive table-hover">
@@ -11,6 +13,13 @@
                 <a class="btn-sm btn-primary" href="{% url 'projects:stud-project-detail' project.id %}">
                     Detail
                 </a>
+            </td>
+            <td class={% if project.is_closed %} "danger" {% endif %}>
+                {% if project.is_closed %}
+                    {{project.closing_datetime}} (Closed)
+                {% else %}
+                    {{project.closing_datetime}}
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

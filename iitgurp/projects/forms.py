@@ -29,3 +29,18 @@ class ProjectCreateForm(forms.ModelForm):
                 "format": "YYYY-MM-DD HH:mm", "pickTime": True
             }),
         }
+
+
+class ProjectSearchForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'skills']
+        widgets = {
+            'skills': ModelSelect2MultipleWidget(
+                queryset=Skill.objects.all().order_by('-name'),
+                search_fields=['name', ]
+            ),
+        }
+        help_texts = {
+            'title': 'Title or part of title'
+        }
