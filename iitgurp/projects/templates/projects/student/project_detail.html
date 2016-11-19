@@ -19,20 +19,31 @@
             {{skill.name}} ({{skill.area}}),
         {% endfor %}
     </p>
-    <p>
+    <hr>
+    <div>
         {% if stud_rel %}
-            You applied for this project on {{stud_rel.creation_datetime}}.
+            <p>You applied for this project on {{stud_rel.creation_datetime}}.</p>
             <br>
-            <a href="{% url 'projects:stud-project_stud_rel-delete' project.id %}">
-                <button id="deleteButton">Remove Application</button>
-            </a>
+            {% if project.is_closed %}
+                <p>Project deadline has passed.</p>
+            {% else %}
+                <a href="{% url 'projects:stud-project_stud_rel-delete' project.id %}"
+                   class="btn btn-primary" id="deleteButton">
+                    Remove Application
+                </a>
+            {% endif %}
         {% else %}
-            You haven't applied for this project.
+            <p>You haven't applied for this project.</p>
             <br>
-            <a href="{% url 'projects:stud-project_stud_rel-create' project.id %}">
-                <button id="applyButton">Apply</button>
-            </a>
+            {% if project.is_closed %}
+                <p>Project deadline has passed.</p>
+            {% else %}
+                <a href="{% url 'projects:stud-project_stud_rel-create' project.id %}"
+                   class="btn btn-primary" id="createButton">
+                    Apply
+                </a>
+            {% endif %}
         {% endif %}
-    </p>
+    </div>
     <hr>
 {% endblock %}

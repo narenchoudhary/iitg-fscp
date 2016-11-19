@@ -15,6 +15,8 @@ urlpatterns = [
         views_faculty.ProjectUpdate.as_view(), name='fac-project-update'),
     url(r'^faculty/projects/search/$',
         views_faculty.SearchProject.as_view(), name='fac-project-search'),
+    url(r'faculty/projects/list/csv$', views_faculty.ProjectListCSV.as_view(),
+        name='fac-project-list-csv'),
 
     url(r'^student/projects/list/$',
         views_student.ProjectList.as_view(), name='stud-project-list'),

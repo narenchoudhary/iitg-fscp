@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DetailView, FormView, ListView,
                                   UpdateView, View)
 
+from export_csv.views import ExportCSV
+
 from profiles.models import Faculty
 
 from .forms import ProjectCreateForm, ProjectSearchForm
@@ -138,3 +140,10 @@ class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
             )
         args = dict(project_list=project_list, form=form, results=True)
         return render(self.request, self.template_name, args)
+
+
+class ProjectListCSV(ExportCSV):
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.all()

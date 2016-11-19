@@ -45,10 +45,17 @@
         {% endfor %}
     </table>
 </div>
-<br>
-<p>
-    <a class="btn btn-primary" href="{% url 'projects:fac-project-create'%}">
-        Create new Project
-    </a>
-</p>
+    <hr>
+    <p>
+        <a class="btn btn-primary" href="{% url 'projects:fac-project-list-csv' %}">
+            Export Projects to CSV
+        </a>
+    </p>
+    <hr>
+    <p>
+        <a class="btn btn-primary" href="{% url 'projects:fac-project-create'%}">
+            Create new Project
+        </a>
+    </p>
+    <hr>
 {% endblock %}
