@@ -28,6 +28,8 @@ class ProjectCreateForm(forms.ModelForm):
             'closing_datetime': DateTimePicker(options={
                 "format": "YYYY-MM-DD HH:mm", "pickTime": True
             }),
+            'description': forms.Textarea(attrs={'rows': 5, 'cols': 97}),
+            'requirements': forms.Textarea(attrs={'rows': 5, 'cols': 97})
         }
 
 

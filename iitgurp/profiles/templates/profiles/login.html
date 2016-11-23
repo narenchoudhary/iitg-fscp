@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
 {{ form.non_field_errors }}
-<form action="{% url 'login' %}" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <input type="submit" value="Login" />
-</form>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="well">
+            <form action="{% url 'login' %}" method="post">{% csrf_token %}
+                {{ form | crispy}}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <input class="btn btn-primary" type="submit" value="Login" />
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

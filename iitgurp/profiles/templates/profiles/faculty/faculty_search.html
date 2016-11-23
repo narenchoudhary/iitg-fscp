@@ -1,48 +1,58 @@
 {% extends 'base_faculty.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Faculty | Search{% endblock %}
 
 {% block content %}
-    <form action="" method="post" id="search-form">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Search" />
-    </form>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well">
+                <form action="" method="post" id="search-form">
+                    {% csrf_token %}
+                    {{ form | crispy}}
+                    <input class="btn btn-primary" type="submit" value="Search" />
+                </form>
+            </div>
+        </div>
+    </div>
 
     <hr>
 
-    {% if faculty_list.count < 1 and results %}
-        <p><strong>No results matching your query.</strong></p>
-    {% endif %}
+    <div class="row">
+        {% if faculty_list.count < 1 and results %}
+            <p><strong>No results matching your query.</strong></p>
+        {% endif %}
 
-    {% if faculty_list.count > 0%}
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <tr>
-                <th>Sr. No.</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Web Mail</th>
-                <th>Room No</th>
-                <th>Profile and Projects</th>
-            </tr>
-            {% for faculty in faculty_list %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{faculty.full_name}}</td>
-                <td>{{faculty.department}}</td>
-                <td>{{faculty.web_mail}}</td>
-                <td>{{faculty.room_no}}</td>
-                <td>
-                    <a href="{% url 'fac-search-faculty-detail' faculty.id %}"
-                       class="btn-sm btn-primary">
-                        Profile and Projects
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        {% if faculty_list.count > 0 %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Web Mail</th>
+                    <th>Room No</th>
+                    <th>Profile and Projects</th>
+                </tr>
+                {% for faculty in faculty_list %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{faculty.full_name}}</td>
+                    <td>{{faculty.department}}</td>
+                    <td>{{faculty.web_mail}}</td>
+                    <td>{{faculty.room_no}}</td>
+                    <td>
+                        <a href="{% url 'fac-search-faculty-detail' faculty.id %}"
+                           class="btn-sm btn-primary">
+                            Profile and Projects
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        {% endif %}
     </div>
-    {% else %}
-    {% endif %}
 
 {% endblock %}

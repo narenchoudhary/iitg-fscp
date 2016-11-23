@@ -1,4 +1,5 @@
 {% extends 'base_faculty.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Faculty | Search {% endblock %}
 
@@ -7,44 +8,53 @@
 {% endblock %}
 
 {% block content %}
-<form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Search" />
-    </form>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well">
+               <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <input class="btn btn-primary" type="submit" value="Search" />
+                </form>
+            </div>
+        </div>
+    </div>
+
     <hr>
 
-    {% if results and project_list.count < 1 %}
-        <p><strong>No matching projects found.</strong></p>
-    {% endif %}
+    <div class="row">
+        {% if results and project_list.count < 1 %}
+            <p><strong>No matching projects found.</strong></p>
+        {% endif %}
 
-    {% if project_list.count > 0%}
-    <table class="table table-bordered table-responsive table-hover">
-        <thead>
-            <tr>
-                <td>Sr. No.</td>
-                <td>Title</td>
-                <td>Description</td>
-                <td>Closing Date</td>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project in project_list %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{project.title}}</td>
-                <td>{{project.description}}</td>
+        {% if project_list.count > 0%}
+        <table class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <td>Sr. No.</td>
+                    <td>Title</td>
+                    <td>Description</td>
+                    <td>Closing Date</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for project in project_list %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{project.title}}</td>
+                    <td>{{project.description}}</td>
 
-                <td {% if project.is_closed %}class="danger"{% endif %}>
-                    {% if project.is_closed %}
-                        {{project.closing_datetime}} (Closed)
-                    {% else %}
-                        {{project.closing_datetime}}
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
+                    <td {% if project.is_closed %}class="danger"{% endif %}>
+                        {% if project.is_closed %}
+                            {{project.closing_datetime}} (Closed)
+                        {% else %}
+                            {{project.closing_datetime}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        </div>
 {% endblock %}

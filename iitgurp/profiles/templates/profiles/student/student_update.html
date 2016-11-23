@@ -1,10 +1,17 @@
 {% extends 'base_student.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Student | Profile Update{% endblock %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update" />
-</form>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="well">
+            <form action="" method="post">{% csrf_token %}
+                {{ form | crispy }}
+                <input class="btn btn-primary" type="submit" value="Update" />
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock%}
