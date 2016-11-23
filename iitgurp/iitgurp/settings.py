@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_select2',
     'bootstrap3_datetime',
-    'export_csv',
+    #'export_csv',
     'profiles',
     'projects',
 ]
