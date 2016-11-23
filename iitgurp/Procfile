@@ -1,1 +1,1 @@
-web: gunicorn iitgurp.wsgi --log-file -
+web: gunicorn iitgurp.wsgi:application --log-file -
