@@ -25,7 +25,9 @@ class FacultySearchForm(forms.Form):
                                 label='Name of Faculty',
                                 help_text='Type name or part of name')
     department = forms.ChoiceField(choices=DEPARTMENT_BLANK,
-                                   required=False, initial='')
+                                   required=False, initial='',
+                                   widget=forms.Select()
+                                   )
 
 
 class StudentSearch(forms.Form):

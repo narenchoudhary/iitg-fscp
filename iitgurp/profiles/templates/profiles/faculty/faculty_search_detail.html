@@ -1,46 +1,98 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Search{% endblock %}
 
-{% block content %}
-    <p><strong>Faculty Detail</strong></p>
-    <p>Name : {{ fac.full_name }}</p>
-    <p>Department: {{ fac.department }}</p>
-    <p>Webmail : {{ fac.web_mail }}</p>
-    <hr>
-    {% if project_list.count < 1 %}
-        <p><strong>No project has been posted from this account.</strong></p>
-    {% endif %}
-    {% if project_list.count > 0 %}
-    <p>Project List</p>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <td>Sr. No</td>
-                        <td>Title</td>
-                        <td>Description</td>
-                        <td>Closing Date</td>
-                    </tr>
-                </thead>
-            {% for project in project_list %}
-                <tbody>
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{project.title}}</td>
-                        <td>{{project.description}}</td>
-                        <td {% if project.is_closed %}class="danger"{% endif %}>
-                            {% if project.is_closed %}
-                                {{project.closing_datetime}} (Closed)
-                            {% else %}
-                                {{project.closing_datetime}}
-                            {% endif%}
-                        </td>
-                    </tr>
-                </tbody>
-            {% endfor %}
-        </table>
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a href="{% url 'fac-faculty-search' %}" class="breadcrumb">Search Faculty</a>
+                    <a class="breadcrumb">Faculty Details</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Faculty Profile</h4>
+                    <div class="divider"></div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Name
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ fac.full_name }}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Web Mail
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ fac.web_mail }}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Department
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ fac.department }}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Room No
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ fac.room_no }}
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+                <div class="section">
+                    <h4>Faculty Projects</h4>
+                    <div class="divider"></div>
+                    {% if project_list.count < 1 %}
+                        <p><strong>No project has been posted from this account.</strong></p>
+                    {% endif %}
+                    {% if project_list.count > 0 %}
+                        <table class="table responsive-table centered">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Closing Date</th>
+                                </tr>
+                            </thead>
+                            {% for project in project_list %}
+                                <tbody>
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{project.title}}</td>
+                                        <td>{{project.description}}</td>
+                                        <td {% if project.is_closed %}class="danger"{% endif %}>
+                                            {% if project.is_closed %}
+                                                {{project.closing_datetime}} (Closed)
+                                            {% else %}
+                                                {{project.closing_datetime}}
+                                            {% endif%}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
 {% endblock %}

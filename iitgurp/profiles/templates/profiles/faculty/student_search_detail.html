@@ -1,43 +1,83 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Search{% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a href="{% url 'fac-student-search' %}" class="breadcrumb">Search Student</a>
+                    <a class="breadcrumb">Student Details</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
 
-    <p><strong>Faculty Detail</strong></p>
-    <p>Name : {{ stud.full_name }}</p>
-    <p>Web Mail : {{ stud.web_mail }}</p>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Student Details</h4>
+                    <div class="divider" style="margin-bottom: 10px"></div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Name
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ stud.full_name }}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Web Mail
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ stud.web_mail }}
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                </div>
 
-    <hr>
+                {% if stud_rel_list.count < 1 %}
+                <div class="section">
+                    <h4 class="header">Search Results</h4>
+                    <div class="divider"></div>
+                    <p><strong>No project has been posted from this account.</strong></p>
+                    <div class="divider"></div>
+                </div>
+                {% elif stud_rel_list.count > 0 %}
 
-    {% if stud_rel_list.count < 1 %}
-        <p><strong>No project has been posted from this account.</strong></p>
-    {% endif %}
-
-    {% if stud_rel_list.count > 0 %}
-    <p>Project List</p>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <td>Sr. No</td>
-                        <td>Title</td>
-                        <td>Description</td>
-                        <td>Status</td>
-                    </tr>
-                </thead>
-            {% for stud_rel in stud_rel_list %}
-                <tbody>
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{stud_rel.project.title}}</td>
-                        <td>{{stud_rel.project.description}}</td>
-                        <td>{{stud_rel.status}}</td>
-                    </tr>
-                </tbody>
-            {% endfor %}
-        </table>
+                <div class="section">
+                    <h4 class="header">Projects</h4>
+                    <div class="divider"></div>
+                    <table class="table responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>Sr. No</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stud_rel in stud_rel_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{stud_rel.project.title}}</td>
+                                <td>{{stud_rel.project.description}}</td>
+                                <td>{{stud_rel.status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="divider"></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    {% endif %}
 {% endblock %}

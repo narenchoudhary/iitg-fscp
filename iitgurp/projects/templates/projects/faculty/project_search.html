@@ -1,60 +1,96 @@
-{% extends 'base_faculty.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base_faculty2.html' %}
+{% load static %}
 
 {% block title %}Faculty | Search {% endblock %}
 
 {% block custom_styles %}
-<style type="text/css">select {  width: 500px; }</style>
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
 {% endblock %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="well">
-               <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form | crispy }}
-                    <input class="btn btn-primary" type="submit" value="Search" />
-                </form>
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a class="breadcrumb">Search Projects</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Search Project</h4>
+                    <div class="divider" style="margin-bottom: 10px"></div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="input-field col s12 l12 m12">
+                                    {{ field.errors }}
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <input class="btn" type="submit" value="Search" />
+                    </form>
+                </div>
+
+                {% if results and project_list.count < 1 %}
+                    <div class="section">
+                        <h4 class="header">Search Results</h4>
+                        <div class="divider" style="margin-bottom: 10px"></div>
+                        <p><strong>No matching projects found.</strong></p>
+                    </div>
+                {% endif %}
+
+                {% if project_list.count > 0%}
+                    <div class="section">
+                        <h4>Search Results</h4>
+                        <div class="divider" style="margin-bottom:10px"></div>
+                        <table class="table responsive-table centered">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Closing Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for project in project_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{project.title}}</td>
+                                    <td>{{project.description}}</td>
+
+                                    <td {% if project.is_closed %}class="danger"{% endif %}>
+                                        {% if project.is_closed %}
+                                            {{project.closing_datetime}} (Closed)
+                                        {% else %}
+                                            {{project.closing_datetime}}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <hr>
+{% block end_scripts %}
+    {{ form.media.js }}
+    <script>
 
-    <div class="row">
-        {% if results and project_list.count < 1 %}
-            <p><strong>No matching projects found.</strong></p>
-        {% endif %}
-
-        {% if project_list.count > 0%}
-        <table class="table table-bordered table-responsive table-hover">
-            <thead>
-                <tr>
-                    <td>Sr. No.</td>
-                    <td>Title</td>
-                    <td>Description</td>
-                    <td>Closing Date</td>
-                </tr>
-            </thead>
-            <tbody>
-            {% for project in project_list %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{project.title}}</td>
-                    <td>{{project.description}}</td>
-
-                    <td {% if project.is_closed %}class="danger"{% endif %}>
-                        {% if project.is_closed %}
-                            {{project.closing_datetime}} (Closed)
-                        {% else %}
-                            {{project.closing_datetime}}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
-        </div>
+    </script>
 {% endblock %}

@@ -1,46 +1,117 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Project Detail{% endblock %}
 
-{% block content %}
-<p><strong><u>Project Details</u></strong></p>
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a href="{% url 'projects:fac-project-list' %}" class="breadcrumb">Project List</a>
+                    <a href="#" class="breadcrumb">Project Detail</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
 
-<p><strong>Title</strong>: {{project.title}}</p>
-<p><strong>Description</strong>: {{project.description}}</p>
-<p><strong>Hours/Week</strong>: {{project.hours_per_week}} hour(s)</p>
-<p><strong>Skills</strong>:
-    {% for skill in project.skills.all %}
-        {{skill.name}} ({{skill.area}}),
-    {% endfor %}
-</p>
-<p>Other requirements: {{project.requirements}}</p>
-<p>Start Date : {{project.start_date}}</p>
-<p>End Date : {{project.end_date}}</p>
-
-{% if project.is_closed %}
-    <p> Application for project closed on {{project.closing_datetime}}.</p>
-{% else %}
-    <p> Application for project will close on {{project.closing_datetime}}</p>
-{% endif%}
-
-<p>
-    Is something wrong?
-    <a href="{% url 'projects:fac-project-update' project.id %}">
-        <button>Update</button>
-    </a>
-</p>
-<hr>
-<p>Total applicants: {{stud_rel_list.count }}</p>
-<table class="table table-bordered table-hover">
-{% for stud_rel in stud_rel_list %}
-    <tr>
-        <td>{{stud_rel.student.web_mail}}</td>
-        <td>{{stud_rel.student.full_name}}</td>
-        <td>{{stud_rel.student.roll_no}}</td>
-        <td>{{stud_rel.student.mobile_campus}}</td>
-        <td>{{stud_rel.creation_datetime}}</td>
-    </tr>
-{% endfor %}
-</table>
-<hr>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col l10 m9 s12">
+                <div class="section scrollspy">
+                    <h4 class="header">Project Details</h4>
+                    <div class="divider"></div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Title</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.title }}</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Description</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.description }}</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Hours/Week</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.hours_per_week }} (hours)</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Tags</div>
+                        <div class="col l10 m9 s8 field-value">
+                            {% for skill in project.skills.all %}
+                                <div class="chip">{{skill.name}}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Other requirements</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.requirements }}</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Tentative start Date</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.start_date }}</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Tentative end Date</div>
+                        <div class="col l10 m9 s8 field-value">{{ project.end_date }}</div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">Application date</div>
+                        <div class="col l10 m9 s8 field-value">
+                            {% if project.is_closed %}
+                                Application for project closed on {{project.closing_datetime}}.
+                            {% else %}
+                                Application for project will close on {{project.closing_datetime}}
+                            {% endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="section scrollspy">
+                    <div class="divider"></div>
+                        <h4 class="subheader">Update</h4>
+                        <p>Is something wrong?</p>
+                        <p><a href="{% url 'projects:fac-project-update' project.id %}" class="btn">Update</a></p>
+                        <div class="divider"></div>
+                    </div>
+                <div class="section scrollspy">
+                    <h4 class="header">Applicants</h4>
+                    <div class="divider"></div>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        {% for stud_rel in stud_rel_list %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons">perm_identity</i> {{stud_rel.student.full_name}}
+                                </div>
+                                <div class="collapsible-body">
+                                    <p>{{stud_rel.student.web_mail}}</p>
+                                    <p>{{stud_rel.student.roll_no}}</p>
+                                    <p>{{stud_rel.student.mobile_campus}}</p>
+                                    <p>{{stud_rel.creation_datetime}}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="section scrollspy">
+                    <h4 class="header">Applicants</h4>
+                    <div class="divider"></div>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        {% for stud_rel in stud_rel_list %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons">perm_identity</i> {{stud_rel.student.full_name}}
+                                </div>
+                                <div class="collapsible-body">
+                                    <p>{{stud_rel.student.web_mail}}</p>
+                                    <p>{{stud_rel.student.roll_no}}</p>
+                                    <p>{{stud_rel.student.mobile_campus}}</p>
+                                    <p>{{stud_rel.creation_datetime}}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

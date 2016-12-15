@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+
+{% block title %}{% endblock %}
+
+{% block nav %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <a href="#" data-activates="mobile-nav" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="project-dropdown" class="dropdown-content">
+                <li><a href="#">Project List</a></li>
+                <li><a href="#">Create new Project</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{% url 'fac-detail' %}">Profile</a></li>
+                <li>
+                    <a href="#" class="dropdown-buton" hreflang="#"
+                       data-activities="project-dropdown">
+                        Projects
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-nav">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}

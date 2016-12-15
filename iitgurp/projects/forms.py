@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 
 from django import forms
-
-from bootstrap3_datetime.widgets import DateTimePicker
 from django_select2.forms import ModelSelect2MultipleWidget
 
 from .models import Project, Skill
@@ -15,21 +13,17 @@ class ProjectCreateForm(forms.ModelForm):
         fields = ['title', 'description', 'hours_per_week', 'skills',
                   'start_date', 'end_date', 'requirements', 'closing_datetime']
         widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Add a title'}),
             'skills': ModelSelect2MultipleWidget(
                 queryset=Skill.objects.all().order_by('-name'),
-                search_fields=['name', ]
+                search_fields=['name', ],
+                attrs={'class': 'browser-default'},
             ),
-            'start_date': DateTimePicker(options={
-                "format": "YYYY-MM-DD", "pickTime": False
-            }),
-            'end_date': DateTimePicker(options={
-                "format": "YYYY-MM-DD", "pickTime": False
-            }),
-            'closing_datetime': DateTimePicker(options={
-                "format": "YYYY-MM-DD HH:mm", "pickTime": True
-            }),
-            'description': forms.Textarea(attrs={'rows': 5, 'cols': 97}),
-            'requirements': forms.Textarea(attrs={'rows': 5, 'cols': 97})
+            'start_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'end_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'closing_datetime': forms.DateInput(attrs={'class': 'datepicker'}),
+            'description': forms.Textarea(attrs={'rows': 5, 'cols': 97, 'class': 'materialize-textarea'}),
+            'requirements': forms.Textarea(attrs={'rows': 5, 'cols': 97, 'class': 'materialize-textarea'})
         }
 
 

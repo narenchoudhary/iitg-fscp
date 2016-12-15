@@ -1,58 +1,108 @@
-{% extends 'base_faculty.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Search{% endblock %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="well">
-                <form action="" method="post" id="search-form">
-                    {% csrf_token %}
-                    {{ form | crispy}}
-                    <input class="btn btn-primary" type="submit" value="Search" />
-                </form>
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a class="breadcrumb">Search Faculty</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Search Faculty</h4>
+                    <div class="divider" style="margin-bottom: 10px"></div>
+                    <form action="" method="post" id="search-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {% if field.errors %}
+                                        <ul class="red-text">
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button type="submit" name="_submit" class="btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                {% if faculty_list.count < 1 and results %}
+                    <div class="section">
+                        <h4 class="header">Search Results</h4>
+                        <div class="divider"></div>
+                        <p><strong>No results matching your query.</strong></p>
+                        <div class="divider"></div>
+                    </div>
+                {% endif %}
+
+                {% if faculty_list.count > 0 %}
+                    <div class="section">
+                        <h4 class="header">Search Results</h4>
+                        <div class="divider"></div>
+                        <div class="table-responsive">
+                            <table class="table responsive-table centered">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Name</th>
+                                        <th>Department</th>
+                                        <th>Web Mail</th>
+                                        <th>Room No</th>
+                                        <th>Profile and Projects</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for faculty in faculty_list %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{faculty.full_name}}</td>
+                                            <td>{{faculty.department}}</td>
+                                            <td>{{faculty.web_mail}}</td>
+                                            <td>{{faculty.room_no}}</td>
+                                            <td>
+                                                <a href="{% url 'fac-search-faculty-detail' faculty.id %}"
+                                                   class="btn btn-flat">
+                                                    Profile and Projects
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <hr>
-
-    <div class="row">
-        {% if faculty_list.count < 1 and results %}
-            <p><strong>No results matching your query.</strong></p>
-        {% endif %}
-
-        {% if faculty_list.count > 0 %}
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <tr>
-                    <th>Sr. No.</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Web Mail</th>
-                    <th>Room No</th>
-                    <th>Profile and Projects</th>
-                </tr>
-                {% for faculty in faculty_list %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{faculty.full_name}}</td>
-                    <td>{{faculty.department}}</td>
-                    <td>{{faculty.web_mail}}</td>
-                    <td>{{faculty.room_no}}</td>
-                    <td>
-                        <a href="{% url 'fac-search-faculty-detail' faculty.id %}"
-                           class="btn-sm btn-primary">
-                            Profile and Projects
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-        {% else %}
-        {% endif %}
-    </div>
-
+{% block end_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 {% endblock %}

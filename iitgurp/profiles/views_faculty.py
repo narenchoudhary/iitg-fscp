@@ -149,5 +149,5 @@ class StudentSearchDetail(LoginRequiredMixin, UserPassesTestMixin, View):
         student = get_object_or_404(Student, pk=kwargs.get('pk', None))
         stud_rel_list = ProjectStudentRelation.objects.filter(
             student=student)
-        args = dict(stud_rel_list=stud_rel_list, student=student)
+        args = dict(stud_rel_list=stud_rel_list, stud=student)
         return render(request, self.template_name, args)

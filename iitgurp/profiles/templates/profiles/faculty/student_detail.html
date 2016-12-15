@@ -1,8 +1,32 @@
-{% extends 'base_faculty.html'%}
+{% extends 'base_faculty2.html'%}
 
 {% block title %}Faculty | Student Detail{% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="#" class="breadcrumb">Home</a>
+                <a href="#" class="breadcrumb">Project Detail</a>
+                <a href="#" class="breadcrumb">Student</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <div class="section">
+                    <h4 class="header">Student details</h4>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 <p>Student Details</p>
 <p>Name : {{stud.full_name}}</p>
 

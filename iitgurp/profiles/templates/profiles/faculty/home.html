@@ -1,25 +1,28 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Home{% endblock %}
 
-{%block content%}
-<p>Home</p>
-{{fac.web_mail}}
-<br>
-<hr>
-<p>Profile Links</p>
-<ol>
-    <li><a href="{% url 'fac-detail'%}">Detail</a></li>
-    <li><a href="{% url 'fac-update'%}">Update</a></li>
-</ol>
-<br>
-<hr>
-<p>Projects Links</p>
-<ol>
-    <li><a href="{% url 'projects:fac-project-create' %}">Create Project</a></li>
-    <li><a href="{% url 'projects:fac-project-list' %}">Project List</a></li>
-</ol>
-<hr>
-<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a class="breadcrumb">Home</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
 
+{%block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <div class="section">
+                    <h4 class="header">Home</h4>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

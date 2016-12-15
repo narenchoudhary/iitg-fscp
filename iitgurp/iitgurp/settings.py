@@ -40,11 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'debug_toolbar',
-    'crispy_forms',
     'django_select2',
-    'bootstrap3_datetime',
-    #'export_csv',
+    # 'export_csv',
     'profiles',
     'projects',
 ]
@@ -58,7 +55,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'iitgurp.urls'
@@ -115,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.9/topics/auth/customizing/
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'profiles.auth.WebMailAuthenticationBackend',
+    #'profiles.auth.WebMailAuthenticationBackend',
 ]
 
 # Internationalization
@@ -197,12 +194,6 @@ except ImportError:
 SELECT2_JS = 'js/select2.min.js'
 # http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.CSS
 SELECT2_CSS = 'css/select2.min.css'
-
-# django-crispy-forms configuration
-# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-# http://django-crispy-forms.readthedocs.io/en/latest/install.html#setting-media-files
-CRISPY_FAIL_SILENTLY = not DEBUG
 
 # django-debug-toolbar configuration
 # https://django-debug-toolbar.readthedocs.io/en/stable/installation.html#internal-ips

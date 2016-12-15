@@ -1,24 +1,67 @@
-{% extends 'base_faculty.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base_faculty2.html' %}
+{% load static %}
 
 {% block title %}Faculty | Create Project{% endblock %}
 
 {% block custom_styles %}
-<style type="text/css">select {  width: 500px; }</style>
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
 {% endblock %}
 
-{% block content %}
-<div class="row">
-    <div class="col-lg-9">
-        <h4>Create a new Project</h4>
-        <div class="well">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form | crispy }}
-                <input class="btn btn-primary" type="submit" value="Create" />
-            </form>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                <a href="{% url 'projects:fac-project-list' %}" class="breadcrumb">Project List</a>
+                <a href="#" class="breadcrumb">Project Create</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+                <h4 class="header">Create new Project</h4>
+                <div class="divider" style="margin-bottom: 10px"></div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="row">
+                            <div class="input-field col s12">
+                                    {% if field.errors %}
+                                        <div class="errorlist">
+                                        <ul class="red-text">
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        </div>
+                                    {% endif %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" name="_submit" class="btn">Create</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 
+{% block end_scripts %}
+    {{ form.media.js }}
+    <script>
+    $('.datepicker').pickadate({
+        selectMonths: true,
+        selectYears: 5,
+        format: 'yyyy-mm-dd'
+      });
+    </script>
+{% endblock %}

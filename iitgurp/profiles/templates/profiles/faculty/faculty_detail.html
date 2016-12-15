@@ -1,9 +1,75 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base_faculty2.html' %}
 
 {% block title %}Faculty | Profile Detail{% endblock %}
 
-{% block content %}
-<p>Profile Details</p>
-<p>{{fac.web_mail}}</p>
-<p><a class="btn-sm btn-primary" href="{% url 'fac-update' %}">Update Profile</a></p>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                <a class="breadcrumb">Profile Details</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col l12 m12 s12">
+            <div class="section">
+                <h4 class="header">Profile Details</h4>
+                <div class="divider"></div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Name
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.full_name }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Web Mail
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.web_mail }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Department
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.department }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Room No
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.room_no }}
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Last Updated on
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.last_updated }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col">
+                        <a href="{% url 'fac-update' %}" class="btn waves-effect waves-light">Update Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
