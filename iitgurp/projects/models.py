@@ -13,13 +13,26 @@ datetime_input_formats = ['%Y-%m-%d %H:%M']
 
 @python_2_unicode_compatible
 class Skill(models.Model):
-    name = models.CharField(max_length=40, null=False, blank=False)
-    area = models.CharField(max_length=40, null=False, blank=False)
+    name = models.CharField(unique=True, max_length=40, null=False, blank=False)
     description = models.CharField(max_length=600, null=True,
                                    blank=False)
+    created_on = models.DateTimeField(null=False, blank=True)
+    last_updated_on = models.DateTimeField(null=False, blank=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, **kwargs):
+        if not self.id:
+            self.created_on = timezone.now()
+        self.last_updated_on = timezone.now()
+        super(Skill, self).save(**kwargs)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+        get_latest_by = 'last_updated_on'
 
 
 @python_2_unicode_compatible
@@ -37,7 +50,7 @@ class Project(models.Model):
     end_date = models.DateField(null=True, blank=False,
                                 verbose_name='Tentative End Date')
     # skills/prerequisites
-    skills = models.ManyToManyField(Skill, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True, verbose_name='Tags')
     requirements = models.TextField(null=True, blank=True, max_length=400,
                                     verbose_name='Other Requirements')
     # dates
@@ -71,6 +84,9 @@ class Project(models.Model):
         self.last_updated = timezone.now()
         super(Project, self).save(**kwargs)
 
+    class Meta:
+        ordering = ['-closing_datetime']
+
 
 @python_2_unicode_compatible
 class ProjectStudentRelation(models.Model):
@@ -88,6 +104,7 @@ class ProjectStudentRelation(models.Model):
     completion_datetime = models.DateTimeField(null=True, blank=True)
 
     class Meta:
+        ordering = ['last_updated']
         unique_together = ['project', 'student']
 
     def __str__(self):
