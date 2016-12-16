@@ -34,7 +34,8 @@ class ProjectSearchForm(forms.ModelForm):
         widgets = {
             'skills': ModelSelect2MultipleWidget(
                 queryset=Skill.objects.all().order_by('-name'),
-                search_fields=['name', ]
+                search_fields=['name', ],
+                attrs={'class': 'browser-default'},
             ),
         }
         help_texts = {

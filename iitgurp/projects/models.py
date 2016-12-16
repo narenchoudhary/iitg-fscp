@@ -15,6 +15,8 @@ datetime_input_formats = ['%Y-%m-%d %H:%M']
 class Skill(models.Model):
     name = models.CharField(max_length=40, null=False, blank=False)
     area = models.CharField(max_length=40, null=False, blank=False)
+    description = models.CharField(max_length=600, null=True,
+                                   blank=False)
 
     def __str__(self):
         return self.name

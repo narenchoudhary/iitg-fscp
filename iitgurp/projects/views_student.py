@@ -10,7 +10,7 @@ from django.views.generic import View, DetailView, FormView, ListView
 from profiles.models import Student
 
 from .forms import ProjectSearchForm
-from .models import Project, ProjectStudentRelation
+from .models import Project, ProjectStudentRelation, Skill
 
 
 class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -24,6 +24,24 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def test_func(self):
         return self.request.user.user_type == 'student'
+
+
+class ProjectListBySkill(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    login_url = reverse_lazy('login')
+    template_name = 'projects/student/project_list.html'
+    context_object_name = 'project_list'
+
+    def test_func(self):
+        return self.request.user.user_type == 'student'
+
+    def get_queryset(self):
+        skill = Skill.objects.get(id=self.kwargs.get('pk'))
+        return skill.project_set.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListBySkill, self).get_context_data(**kwargs)
+        context['skill'] = Skill.objects.get(id=self.kwargs.get('pk'))
+        return context
 
 
 class ProjectDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
@@ -121,3 +139,17 @@ class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
             )
         args = dict(project_list=project_list, form=form, results=True)
         return render(self.request, self.template_name, args)
+
+
+class ProjectStudentRelationList(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    login_url = reverse_lazy('login')
+    template_name = 'projects/student/project_stud_rel_list.html'
+    context_object_name = 'project_rel_list'
+
+    def test_func(self):
+        return self.request.user.user_type == 'student'
+
+    def get_queryset(self):
+        return ProjectStudentRelation.objects.filter(
+            student__user_profile=self.request.user
+        )

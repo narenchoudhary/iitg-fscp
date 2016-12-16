@@ -61,6 +61,11 @@ class StudentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('stud-detail')
 
+    def get_form(self, form_class=None):
+        form = super(StudentUpdate, self).get_form(form_class)
+        # form.fields['hostel'].widget.attrs['class'] = 'browser-default'
+        return form
+
 
 class FacultySearch(LoginRequiredMixin, UserPassesTestMixin, FormView):
     """
