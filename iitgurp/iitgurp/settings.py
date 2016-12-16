@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'django_select2',
-    # 'export_csv',
+    'export_csv',
     'profiles',
     'projects',
 ]
@@ -112,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.9/topics/auth/customizing/
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    #'profiles.auth.WebMailAuthenticationBackend',
+    # 'profiles.auth.WebMailAuthenticationBackend',
 ]
 
 # Internationalization
@@ -188,12 +187,6 @@ try:
     from local_settings import *
 except ImportError:
     pass
-
-# django-select2 configuration
-# http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.JS
-SELECT2_JS = 'js/select2.min.js'
-# http://django-select2.readthedocs.io/en/latest/django_select2.html#django_select2.conf.Select2Conf.CSS
-SELECT2_CSS = 'css/select2.min.css'
 
 # django-debug-toolbar configuration
 # https://django-debug-toolbar.readthedocs.io/en/stable/installation.html#internal-ips
