@@ -1,49 +1,129 @@
-{% extends 'base_student.html'%}
+{% extends 'base_student2.html'%}
 
 {% block title %}Student | Project Detail{% endblock %}
 
-{% block content %}
-    <p>Project Details</p>
-
-    <p><strong>Title</strong>: {{project.title}}</p>
-    <p>
-        Posted By:
-        <a href="{% url 'stud-fac-detail' project.faculty.id %}">
-            {{project.faculty.full_name}}
-        </a>
-    </p>
-    <p><strong>Description</strong>: {{project.description}}</p>
-    <p><strong>Hours/Week</strong>: {{project.hours_per_week}} hour(s)</p>
-    <p><strong>Skills</strong>:
-        {% for skill in project.skills.all %}
-            {{skill.name}} ({{skill.area}}),
-        {% endfor %}
-    </p>
-    <hr>
-    <div>
-        {% if stud_rel %}
-            <p>You applied for this project on {{stud_rel.creation_datetime}}.</p>
-            <br>
-            {% if project.is_closed %}
-                <p>Project deadline has passed.</p>
-            {% else %}
-                <a href="{% url 'projects:stud-project_stud_rel-delete' project.id %}"
-                   class="btn btn-primary" id="deleteButton">
-                    Remove Application
-                </a>
-            {% endif %}
-        {% else %}
-            <p>You haven't applied for this project.</p>
-            <br>
-            {% if project.is_closed %}
-                <p>Project deadline has passed.</p>
-            {% else %}
-                <a href="{% url 'projects:stud-project_stud_rel-create' project.id %}"
-                   class="btn btn-primary" id="createButton">
-                    Apply
-                </a>
-            {% endif %}
-        {% endif %}
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'stud-home' %}" class="breadcrumb">Home</a>
+                <a href="{% url 'projects:stud-project-list' %}" class="breadcrumb">Project List</a>
+                <a class="breadcrumb">Project Detail</a>
+            </div>
+        </div>
     </div>
-    <hr>
+</nav>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+                <h4>Project Details</h4>
+                <div class="divider bottom10"></div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Title
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.title }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Description
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.description }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Faculty
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        <a href="">{{ project.faculty.full_name }}</a>
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Hours per Week
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.hours_per_week }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Description
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.description }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Tentative Start Date
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.start_date }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Tentative End Date
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.end_date }}
+                    </div>
+                </div>
+                <div class="row model-field hide-on-small-and-down">
+                    <div class="col l2 m3 s4 field-name">
+                        Requirements
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ project.other_requirements }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Tags
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {% for skill in project.skills.all %}
+                            <div class="chip">
+                                <a href="{% url 'projects:stud-project-list-by-skill' skill.id %}">{{ skill.name }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h4>Application Status</h4>
+                <div class="divider bottom10"></div>
+                {% if stud_rel %}
+                    <p>You applied for this project on <strong>{{stud_rel.creation_datetime}}</strong>.</p>
+                    {% if project.is_closed %}
+                        <p>Project deadline has passed.No changes can be made to application status now.</p>
+                    {% else %}
+                        <a class="btn" href="{% url 'projects:stud-project_stud_rel-delete' project.id %}">
+                            Remove Application
+                        </a>
+                    {% endif %}
+                {% else %}
+                    {% if project.is_closed %}
+                        <p>Project deadline has passed. You cannot apply for project now.</p>
+                    {% else %}
+                        <p>You haven't applied for this project yet. Click on button below to apply.</p>
+                        <a class="btn" href="{% url 'projects:stud-project_stud_rel-create' project.id %}">
+                            Apply
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

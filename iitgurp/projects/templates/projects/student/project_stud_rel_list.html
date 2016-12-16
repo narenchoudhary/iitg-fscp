@@ -1,0 +1,65 @@
+{% extends 'base_student2.html'%}
+
+{% block title %}Student | Your Projects {% endblock %}
+
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'stud-home' %}" class="breadcrumb">Home</a>
+                <a class="breadcrumb">Your Projects</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <div class="section">
+                <h4 class="header">Your Projects</h4>
+                <div class="divider bottom10"></div>
+                {% if project_rel_list.count < 1 %}
+                    <p><strong>You have not applied for any project yet.</strong></p>
+                {% else %}
+                    <table class="table responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Title</th>
+                                <th>Applied On</th>
+                                <th>Status</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project_rel in project_rel_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{project_rel.project.title}}</td>
+                                    <td>
+                                        {% if project_rel.project.is_closed %}
+                                            {{project_rel.project.closing_datetime}} (Closed)
+                                        {% else %}
+                                            {{project_rel.project.closing_datetime}}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ project_rel.status }}</td>
+                                    <td>
+                                        <a class="btn btn-flat" href="{% url 'projects:stud-project-detail' project_rel.project.id %}">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

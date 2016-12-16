@@ -1,12 +1,28 @@
-{% extends 'base_student.html' %}
+{% extends 'base_student2.html' %}
 
 {% block title %}Student | Home{% endblock %}
 
-{% block content %}
-<p>Home</p>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a class="breadcrumb">Home</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
 
-<p><a href="{% url 'stud-detail'%}">Detail</a></p>
-<p><a href="{% url 'stud-update'%}">Update</a></p>
-<hr>
-<p><a href="{% url 'projects:stud-project-list' %}">Project List</a></p>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Home</h4>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -73,13 +73,13 @@
 <script src="{% static 'js/materialize.min.js' %}"></script>
 <script>
 	$(document).ready(function(){
+	    $(".dropdown-button").dropdown();
 		$('.toc-wrapper').pushpin({
 			top: 250
 		});
 		$('.scrollspy').scrollSpy();
 	});
 	$(".button-collapse").sideNav();
-	$(".errorlist").removeClass('errorlist').addClass('red-text');
 </script>
 {% block end_scripts %}{% endblock %}
 </body>

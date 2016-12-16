@@ -1,49 +1,85 @@
-{% extends 'base_student.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base_student2.html' %}
 
-{% block title %}Student | Search{% endblock %}
+{% block title %}Student | Search {% endblock %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="well">
-                <form action="" method="post">{% csrf_token %}
-                    {{ form | crispy }}
-                    <input class="btn btn-primary" type="submit" value="Search" />
-                </form>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'stud-home' %}" class="breadcrumb">Home</a>
+                <a class="breadcrumb">Search Faculty</a>
             </div>
         </div>
     </div>
+</nav>
+{% endblock %}
 
-    <hr>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4>Search Faculty</h4>
+                    <div class="divider bottom10"></div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <span class="red-text">{{ field.error }}</span>
+                                    {{ field }}
+                                    {{ field.label_tag }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button type="submit" name="_submit" class="btn">Search</button>
+                    </form>
+                </div>
 
-    <div class="row">
-        {% if results and fac_list.count < 1 %}
-            <p><strong>No matching faculty found.</strong></p>
-        {% endif %}
-        {% if fac_list.count > 0 %}
-        <div class="">
-            <table class="table table-bordered table-responsive table-hover">
-                <thead>
-                    <tr>
-                        <td>Name of Faculty</td>
-                        <td>Department</td>
-                        <td>Link to Profile</td>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for fac in fac_list %}
-                    <tr>
-                        <td>{{ fac.full_name }}</td>
-                        <td>{{ fac.department }}</td>
-                        <td>
-                            <a class="btn-sm btn-primary" href="{% url 'stud-fac-detail' fac.id %}">Detail</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                {% if results and fac_list.count < 1 %}
+                    <div class="section">
+                        <h4>Search Results</h4>
+                        <div class="divider bottom10"></div>
+                        <p><strong>No result matching your query was found.</strong></p>
+                    </div>
+                {% endif %}
+
+                {% if fac_list.count > 0 %}
+                    <div class="section">
+                        <h4>Search Results</h4>
+                        <div class="divider bottom10"></div>
+                        <table class="table responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Name of Faculty</th>
+                                    <th>Department</th>
+                                    <th>Link to Profile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for fac in fac_list %}
+                                <tr>
+                                    <td>{{ fac.full_name }}</td>
+                                    <td>{{ fac.department }}</td>
+                                    <td>
+                                        <a class="btn-sm btn-primary" href="{% url 'stud-fac-detail' fac.id %}">Detail</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
     </div>
+{% endblock %}
+
+{% block end_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 {% endblock %}

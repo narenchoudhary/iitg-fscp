@@ -12,3 +12,7 @@ main {
 .field-name {
     font-weight: bold;
 }
+
+.bottom10 {
+    margin-bottom: 10px;
+}

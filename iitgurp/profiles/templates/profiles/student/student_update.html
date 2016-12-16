@@ -1,17 +1,52 @@
-{% extends 'base_student.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base_student2.html' %}
 
 {% block title %}Student | Profile Update{% endblock %}
 
-{% block content %}
-<div class="row">
-    <div class="col-lg-6">
-        <div class="well">
-            <form action="" method="post">{% csrf_token %}
-                {{ form | crispy }}
-                <input class="btn btn-primary" type="submit" value="Update" />
-            </form>
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a class="breadcrumb">Home</a>
+                <a href="{% url 'stud-detail' %}" class="breadcrumb">Profile Detail</a>
+                <a class="breadcrumb">Profile Update</a>
+            </div>
         </div>
     </div>
-</div>
+</nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="section">
+                    <h4 class="header">Update Profile</h4>
+                    <div class="divider" style="margin-bottom: 10px"></div>
+                    <form action="" method="post" class="col s12">
+                        {% csrf_token %}
+{#                        {{ form.as_p }}#}
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <span class="red-text">{{ field.errors }}</span>
+                                    {{ field }}
+                                    {{ field.label_tag }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button type="submit" name="_submit" class="btn">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock%}
+
+{% block end_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

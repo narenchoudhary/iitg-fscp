@@ -11,14 +11,14 @@
                 <i class="material-icons">menu</i>
             </a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="{% url 'fac-detail' %}">Profile</a></li>
+                <li><a href="{% url 'stud-detail' %}">Profile</a></li>
                 <li>
                     <a class="dropdown-button" href="#" data-activates="projects">
                         Projects<i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <ul id="projects" class="dropdown-content">
-                        <li><a href="{% url 'projects:fac-project-list' %}">Project List</a></li>
-                        <li><a href="{% url 'projects:fac-project-create' %}">Create new Project</a></li>
+                        <li><a href="{% url 'projects:stud-project-list' %}">All Projects</a></li>
+                        <li><a href="{% url 'projects:stud-project_stud_rel-list' %}">Your Projects</a></li>
                     </ul>
                 </li>
                 <li>
@@ -26,15 +26,14 @@
                         Search<i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <ul id="searches" class="dropdown-content">
-                        <li><a href="{% url 'projects:fac-project-search' %}">Search Projects</a></li>
-                        <li><a href="{% url 'fac-student-search' %}">Search Students</a></li>
-                        <li><a href="{% url 'fac-faculty-search' %}">Search Faculties</a></li>
+                        <li><a href="{% url 'projects:stud-project-search' %}">Search Projects</a></li>
+                        <li><a href="{% url 'stud-fac-search' %}">Search Faculties</a></li>
                     </ul>
                 </li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
             <ul class="side-nav" id="mobile-nav">
-                <li><a href="#">Profile</a></li>
+                <li><a href="{% url 'stud-home' %}">Profile</a></li>
                 <li><a href="#">Projects</a></li>
                 <li><a href="#">Search</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
