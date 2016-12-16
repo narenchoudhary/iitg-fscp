@@ -16,3 +16,9 @@ main {
 .bottom10 {
     margin-bottom: 10px;
 }
+
+.caption {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}

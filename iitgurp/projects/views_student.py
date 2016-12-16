@@ -28,7 +28,7 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 class ProjectListBySkill(LoginRequiredMixin, UserPassesTestMixin, ListView):
     login_url = reverse_lazy('login')
-    template_name = 'projects/student/project_list.html'
+    template_name = 'projects/student/skill_detail.html'
     context_object_name = 'project_list'
 
     def test_func(self):

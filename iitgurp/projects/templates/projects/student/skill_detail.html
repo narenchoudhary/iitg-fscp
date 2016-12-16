@@ -1,0 +1,99 @@
+{% extends 'base_student2.html'%}
+
+{% block title %}Student | Tag Detail{% endblock %}
+
+{% block breadcrumb %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper left">
+            <div class="col s12">
+                <a href="{% url 'stud-home' %}" class="breadcrumb">Home</a>
+                <a class="breadcrumb">Tag Detail</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+
+            <div class="section">
+                <h4>Tag Info</h4>
+                <div class="divider bottom10"></div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Tag Name
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ skill.name }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Area
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ skill.area }}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
+                        Description
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ skill.description | default_if_none:"" }}
+                    </div>
+                </div>
+            </div>
+
+            {% if project_list.count < 1 %}
+                <div class="section">
+                    <h4 class="header">Tagged Projects</h4>
+                    <div class="divider bottom10"></div>
+                    <p><strong>No project is available as of now. Please try again.</strong></p>
+                </div>
+            {% endif %}
+
+            {% if project_list.count > 0 %}
+                <div class="section">
+                    <h4 class="header">Tagged Projects</h4>
+                    <div class="divider bottom10"></div>
+                    <table class="table responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Title</th>
+                                <th>Closing Date</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in project_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{project.title}}</td>
+                                    <td>
+                                        {% if project.is_closed %}
+                                            {{project.closing_datetime}} (Closed)
+                                        {% else %}
+                                            {{project.closing_datetime}}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-flat" href="{% url 'projects:stud-project-detail' project.id %}">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

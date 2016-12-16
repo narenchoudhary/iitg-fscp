@@ -9,10 +9,10 @@ function update_profile() {
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         },
         success: function (json) {
-            alert("profile updatde successfully");
+            alert("profile updated successfully");
         },
         error : function(xhr,errmsg,err){
-            alert("some error occured while updating profile");
+            alert("some error occurred while updating profile");
         }
     });
 }

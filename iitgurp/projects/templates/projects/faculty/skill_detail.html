@@ -1,0 +1,91 @@
+{% extends 'base_faculty2.html' %}
+{% load static %}
+
+{% block title %}Faculty | Tag Detail{% endblock %}
+
+{% block custom_styles %}
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper left">
+                <div class="col s12">
+                    <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
+                    <a href="{% url 'projects:fac-skill-list' %}" class="breadcrumb">Tag List</a>
+                    <a class="breadcrumb">Tag Detail</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+
+                <div class="section">
+                    <h4>Tag Info</h4>
+                    <div class="divider bottom10"></div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            <div class="chip">
+                                {{ skill.name }}
+                            </div>
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ skill.description }}
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <p>
+                        If you feel that the tag <span class="chip">{{ skill.name }}</span> information
+                        is not correct, you can edit it
+                        <a href="{% url 'projects:fac-skill-update' skill.id %}">here</a>.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h4>Tagged Projects</h4>
+                    <div class="divider bottom10"></div>
+                    {% if project_list.count < 1 %}
+                        <p>
+                            <strong>No project tagged </strong>
+                            <span class="chip">{{ skill.name }}</span>
+                            <strong>is available.</strong>
+                        </p>
+                    {% else %}
+                        <table class="table responsive-table centered">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No</th>
+                                    <th>Title</th>
+                                    <th>Posted By</th>
+                                    <th>Application Deadline</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in project_list %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ project.title }}</td>
+                                        <td>{{ project.faculty.full_name }}</td>
+                                        <td>{{ project.closing_datetime }}</td>
+                                        <td>
+                                            <a href="{% url 'projects:fac-project-search-detail' project.id %}"
+                                               class="btn btn-flat">Detail</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

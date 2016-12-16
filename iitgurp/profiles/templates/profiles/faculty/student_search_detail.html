@@ -1,6 +1,6 @@
 {% extends 'base_faculty2.html' %}
 
-{% block title %}Faculty | Search{% endblock %}
+{% block title %}Faculty | Student Detail {% endblock %}
 
 {% block breadcrumb %}
     <nav>
@@ -22,7 +22,7 @@
             <div class="col s12">
                 <div class="section">
                     <h4 class="header">Student Details</h4>
-                    <div class="divider" style="margin-bottom: 10px"></div>
+                    <div class="divider bottom10"></div>
                     <div class="row model-field">
                         <div class="col l2 m3 s4 field-name">
                             Name
@@ -46,13 +46,22 @@
                 <div class="section">
                     <h4 class="header">Search Results</h4>
                     <div class="divider"></div>
-                    <p><strong>No project has been posted from this account.</strong></p>
+                    <p>
+                        <strong>This student is neither currently involved in nor has
+                            been part of any project in the past.
+                        </strong>
+                    </p>
                     <div class="divider"></div>
                 </div>
                 {% elif stud_rel_list.count > 0 %}
 
                 <div class="section">
                     <h4 class="header">Projects</h4>
+                    <p>
+                        This student is either currently involved in or has
+                            been part of following projects in the past.
+
+                    </p>
                     <div class="divider"></div>
                     <table class="table responsive-table centered">
                         <thead>

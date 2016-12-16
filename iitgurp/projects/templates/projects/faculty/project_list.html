@@ -19,9 +19,23 @@
     <div class="container">
         <div class="row">
             <div class="col l12 m12 s12">
+                {% if project_list.count < 1 %}
                 <div class="section">
-                    <h5 class="header">Project List</h5>
-                    <div class="divider"></div>
+                    <h4>Project List</h4>
+                    <p class="caption">This project lists all projects posted from this account.</p>
+                    <div class="divider bottom10"></div>
+                    <p><strong>No project has been posted form this profile.</strong></p>
+                </div>
+                {% else %}
+                <div class="section">
+                    <h4 class="header">Project List</h4>
+                    <p>
+                        This page lists all projects posted from this account.
+                        <br>
+                        Click on
+                        DETAIL and UPDATE buttons to view details and modify project respectively.
+                    </p>
+                    <div class="divider bottom10"></div>
                     <table class="table responsive-table centered">
                         <thead>
                             <tr>
@@ -62,6 +76,7 @@
                     </table>
                     <div class="divider"></div>
                 </div>
+                {% endif %}
                 <div class="section">
                     <p>
                         <a class="btn btn-primary" href="{% url 'projects:fac-project-create'%}">

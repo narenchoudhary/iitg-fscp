@@ -16,14 +16,18 @@
 	<link rel="stylesheet" href="{% static 'css/fscp.css' %}">
     {% block custom_styles %}{% endblock %}
 </head>
+
 <body>
+
 <header>
     {% block nav %}{% endblock %}
     {% block breadcrumb %}{% endblock %}
 </header>
+
 <main>
 	{% block main %}{% endblock %}
 </main>
+
 <footer class="page-footer fixed grey darken-1">
 	<div class="container">
 		<div class="row">
@@ -69,18 +73,28 @@
 		</div>
 	</div>
 </footer>
+
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/materialize.min.js' %}"></script>
+
 <script>
 	$(document).ready(function(){
 	    $(".dropdown-button").dropdown();
+	    $('select').material_select();
 		$('.toc-wrapper').pushpin({
 			top: 250
 		});
 		$('.scrollspy').scrollSpy();
 	});
+	$('.datepicker').pickadate({
+        selectMonths: true,
+        selectYears: 5,
+        format: 'yyyy-mm-dd'
+      });
 	$(".button-collapse").sideNav();
 </script>
+
 {% block end_scripts %}{% endblock %}
+
 </body>
 </html>

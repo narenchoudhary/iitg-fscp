@@ -11,8 +11,8 @@ from export_csv.views import ExportCSV
 
 from profiles.models import Faculty
 
-from .forms import ProjectCreateForm, ProjectSearchForm
-from .models import Project, ProjectStudentRelation
+from .forms import ProjectCreateForm, ProjectSearchForm, SkillForm
+from .models import Project, ProjectStudentRelation, Skill
 
 
 class ProjectCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -142,8 +142,79 @@ class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
         return render(self.request, self.template_name, args)
 
 
+class ProjectSearchDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    login_url = reverse_lazy('login')
+    template_name = 'projects/faculty/project_search_detail.html'
+    model = Project
+    context_object_name = 'project'
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectSearchDetail, self).get_context_data(**kwargs)
+        context['stud_rel_list'] = ProjectStudentRelation.objects.filter(
+            project=self.object
+        )
+        return context
+
+
 class ProjectListCSV(ExportCSV):
     model = Project
 
     def get_queryset(self):
         return Project.objects.all()
+
+
+class SkillList(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    login_url = reverse_lazy('login')
+    model = Skill
+    template_name = 'projects/faculty/skill_list.html'
+    context_object_name = 'skill_list'
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+
+class SkillCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = reverse_lazy('login')
+    model = Skill
+    fields = '__all__'
+    template_name = 'projects/faculty/skill_create.html'
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+    def get_success_url(self):
+        return reverse_lazy('projects:fac-skill-detail',
+                            args=(self.object.id,))
+
+
+class SkillDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    login_url = reverse_lazy('login')
+    model = Skill
+    template_name = 'projects/faculty/skill_detail.html'
+    context_object_name = 'skill'
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+    def get_context_data(self, **kwargs):
+        context = super(SkillDetail, self).get_context_data(**kwargs)
+        skill = Skill.objects.get(id=self.kwargs.get('pk'))
+        context['project_list'] = skill.project_set.all()
+        return context
+
+
+class SkillUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = reverse_lazy('login')
+    model = Skill
+    form_class = SkillForm
+    template_name = 'projects/faculty/skill_update.html'
+
+    def test_func(self):
+        return self.request.user.user_type == 'faculty'
+
+    def get_success_url(self):
+        return reverse_lazy('projects:fac-skill-detail',
+                            args=(self.object.id,))

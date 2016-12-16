@@ -19,7 +19,8 @@
 {% block main %}
     <div class="container">
         <div class="row">
-            <div class="col l10 m9 s12">
+            <div class="col l12 m12 s12">
+
                 <div class="section scrollspy">
                     <h4 class="header">Project Details</h4>
                     <div class="divider"></div>
@@ -66,50 +67,68 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="section scrollspy">
-                    <div class="divider"></div>
-                        <h4 class="subheader">Update</h4>
+                        <h4 class="subheader">Edit Project</h4>
+                        <div class="divider"></div>
                         <p>Is something wrong?</p>
-                        <p><a href="{% url 'projects:fac-project-update' project.id %}" class="btn">Update</a></p>
+                        <p>
+                            <a href="{% url 'projects:fac-project-update' project.id %}" class="btn">
+                                Edit Project
+                            </a>
+                        </p>
                         <div class="divider"></div>
                     </div>
+
                 <div class="section scrollspy">
                     <h4 class="header">Applicants</h4>
-                    <div class="divider"></div>
-                    <ul class="collapsible" data-collapsible="accordion">
-                        {% for stud_rel in stud_rel_list %}
-                            <li>
-                                <div class="collapsible-header">
-                                    <i class="material-icons">perm_identity</i> {{stud_rel.student.full_name}}
-                                </div>
-                                <div class="collapsible-body">
-                                    <p>{{stud_rel.student.web_mail}}</p>
-                                    <p>{{stud_rel.student.roll_no}}</p>
-                                    <p>{{stud_rel.student.mobile_campus}}</p>
-                                    <p>{{stud_rel.creation_datetime}}</p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="section scrollspy">
-                    <h4 class="header">Applicants</h4>
-                    <div class="divider"></div>
-                    <ul class="collapsible" data-collapsible="accordion">
-                        {% for stud_rel in stud_rel_list %}
-                            <li>
-                                <div class="collapsible-header">
-                                    <i class="material-icons">perm_identity</i> {{stud_rel.student.full_name}}
-                                </div>
-                                <div class="collapsible-body">
-                                    <p>{{stud_rel.student.web_mail}}</p>
-                                    <p>{{stud_rel.student.roll_no}}</p>
-                                    <p>{{stud_rel.student.mobile_campus}}</p>
-                                    <p>{{stud_rel.creation_datetime}}</p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="divider bottom10"></div>
+                    {% if stud_rel_list.count < 1 %}
+                        <p>
+                            <strong>
+                                No student has yet applied for this project.
+                            </strong>
+                        </p>
+                    {% else %}
+                        <p>
+                            <strong>Note: </strong> Clicking mail button in the table below will
+                            open your default mail application with following body.
+                        </p>
+                        <blockquote>
+                            Hello student_name,
+                            <br>
+                            This mail is a confirmation of your selection to
+                        </blockquote>
+                        <p>You can edit the mail body before sending it to the student.</p>
+                        <div class="divider bottom10"></div>
+                        <table class="table responsive-table centered">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No</th>
+                                    <th>Name</th>
+                                    <th>Web Mail</th>
+                                    <th>Status</th>
+                                    <th>Mail</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stud_rel in stud_rel_list %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ stud_rel.student.full_name }}</td>
+                                        <td>{{ stud_rel.student.web_mail }}</td>
+                                        <td>{{ stud_rel.status }}</td>
+                                        <td><a class="btn">Mail</a></td>
+                                        <td>
+                                            <a href="{% url 'fac-student-detail' stud_rel.student.id %}"
+                                               class="btn-xs btn" >Detail</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
                 </div>
             </div>
         </div>

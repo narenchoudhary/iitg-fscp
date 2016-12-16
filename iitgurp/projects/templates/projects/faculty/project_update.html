@@ -3,10 +3,6 @@
 
 {% block title %}Faculty | Update Project{% endblock %}
 
-{% block custom_styles %}
-<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
-{% endblock %}
-
 {% block breadcrumb %}
     <nav>
         <div class="container">
@@ -28,20 +24,14 @@
                 <div class="section">
                     <h4>Update Existing Project</h4>
                     <div class="divider" style="margin-bottom: 10px"></div>
-                    <form method="post">
+                    <form method="post" action="">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="row">
-                                <div class="input-field col s12">
-                                    {% if field.errors %}
-                                        <ul class="red-text">
-                                            {% for error in field.errors %}
-                                                <li>{{ error }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                    {{ field.label_tag }}
+                                <div class="input-field col s12 l12 m12">
+                                    {{ field.errors }}
                                     {{ field }}
+                                    {{ field.label_tag }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -51,16 +41,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block end_scripts %}
-    {{ form.media.js }}
-    <script>
-    $('.datepicker').pickadate({
-        selectMonths: true,
-        selectYears: 5,
-        format: 'yyyy-mm-dd'
-      });
-
-    </script>
 {% endblock %}

@@ -7,7 +7,7 @@
     <div class="container">
         <div class="nav-wrapper left">
             <div class="col s12">
-                <a href="#" class="breadcrumb">Home</a>
+                <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
                 <a href="#" class="breadcrumb">Project Detail</a>
                 <a href="#" class="breadcrumb">Student</a>
             </div>
@@ -19,31 +19,77 @@
 {% block main %}
     <div class="container">
         <div class="row">
-            <div class="col l12 m12 s12">
+            <div class="col s12">
                 <div class="section">
-                    <h4 class="header">Student details</h4>
+                    <h4 class="header">Student Details</h4>
+                    <div class="divider bottom10"></div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Name
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ stud.full_name }}
+                        </div>
+                    </div>
+                    <div class="row model-field">
+                        <div class="col l2 m3 s4 field-name">
+                            Web Mail
+                        </div>
+                        <div class="col l10 m9 s8 field-value">
+                            {{ stud.web_mail }}
+                        </div>
+                    </div>
                     <div class="divider"></div>
                 </div>
+
+                {% if stud_rel_list.count < 1 %}
+                <div class="section">
+                    <h4 class="header">Search Results</h4>
+                    <div class="divider"></div>
+                    <p>
+                        <strong>This student is neither currently involved nor has
+                            been part of any project in the past.
+                        </strong>
+                    </p>
+                    <div class="divider"></div>
+                </div>
+                {% elif stud_rel_list.count > 0 %}
+
+                <div class="section">
+                    <h4 class="header">Projects</h4>
+                    <p>
+                        <strong>
+                            Following is the list of projects this student is either currently involved
+                            or has been part of in the past.
+                        </strong>
+                    </p>
+                    <div class="divider"></div>
+                    <table class="table responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>Sr. No</th>
+                                <th>Title</th>
+                                <th>Posted By</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stud_rel in stud_rel_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{stud_rel.project.title}}</td>
+                                <td>{{stud_rel.project.faculty.full_name}}</td>
+                                <td>{{stud_rel.project.description}}</td>
+                                <td>{{stud_rel.status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="divider"></div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
-<p>Student Details</p>
-<p>Name : {{stud.full_name}}</p>
-
-{% if stud_rel_list.count > 0 %}
-<p>Projects completed or currently undertaken by {{stud.full_name}}.</p>
-<table class="table table-bordered table-responsive table-hover">
-    {% for stud_rel in stud_rel_list %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{stud_rel.project.title}}</td>
-            <td>{{stud_rel.project.faculty.full_name}}</td>
-            <td>{{stud.status}}</td>
-        </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>{{stud.full_name}} has not undertaken any project yet.</p>
-{% endif %}
-
 {% endblock %}
