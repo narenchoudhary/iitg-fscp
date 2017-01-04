@@ -48,7 +48,8 @@ class StudentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = reverse_lazy('login')
     template_name = 'profiles/student/student_update.html'
     model = Student
-    fields = ['hostel', 'room_no', 'mobile_campus', 'alternate_email']
+    fields = ['hostel', 'room_no', 'mobile_campus', 'alternate_email',
+              'year_of_admission', 'department', 'discipline', 'programme']
 
     def test_func(self):
         return self.request.user.user_type == 'student'
