@@ -57,15 +57,6 @@
 				</ul>
 			</div>
 		</div>
-		<div class="divider"></div>
-		<div class="row">
-			<div class="col l12 m12 s12">
-				<p class="grey-text darken-4">Designed and built by
-					<span class="white-text">Narendra Choudhary</span>
-					and maintained by the
-                    <span class="white-text">Academic Initiatives Club.</span>
-			</div>
-		</div>
 	</div>
 	<div class="footer-copyright grey darken-4">
 		<div class="container">
@@ -91,7 +82,10 @@
         selectYears: 5,
         format: 'yyyy-mm-dd'
       });
-	$(".button-collapse").sideNav();
+	$(".button-collapse").sideNav({
+	    closeOnClick: true,
+        draggable: true
+    });
 </script>
 
 {% block end_scripts %}{% endblock %}

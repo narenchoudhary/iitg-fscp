@@ -22,3 +22,19 @@ main {
     font-weight: 300;
     margin-bottom: 30px;
 }
+
+.faq-que {
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 1em;
+    line-height: 1.2em;
+}
+
+.faq-ans {
+    line-height: 1.5em;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+}

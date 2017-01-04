@@ -35,9 +35,38 @@
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
             <ul class="side-nav" id="mobile-nav">
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Search</a></li>
+                <li><a href="{% url 'fac-detail' %}">Profile</a></li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header">
+                                Projects<i class="material-icons">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="{% url 'projects:fac-project-list' %}">Your projects</a></li>
+                                    <li><a href="{% url 'projects:fac-project-create' %}">Create new Project</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header">
+                                Search<i class="material-icons">arrow_drop_down</i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="{% url 'projects:fac-project-search' %}">Search Projects</a></li>
+                                    <li><a href="{% url 'fac-student-search' %}">Search Students</a></li>
+                                    <li><a href="{% url 'fac-faculty-search' %}">Search Faculties</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </div>
