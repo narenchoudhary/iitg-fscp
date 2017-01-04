@@ -39,7 +39,7 @@ class Student(models.Model):
         choices=DEPARTMENT, max_length=200, null=False, blank=False,
         verbose_name='Major Department')
     discipline = models.CharField(
-        null=False, blank=False, max_length=200,
+        choices=DISCIPLINES, null=False, blank=False, max_length=200,
         verbose_name='Major Discipline')
     programme = models.CharField(
         choices=PROGRAMMES, null=False, blank=False, max_length=10,
