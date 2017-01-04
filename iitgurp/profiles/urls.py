@@ -5,6 +5,7 @@ from . import views, views_faculty, views_student
 urlpatterns = [
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
+    url(r'^help/$', views.HelpPageView.as_view(), name='help'),
 
     url(r'^student/home/$', views_student.Home.as_view(), name='stud-home'),
     url(r'^student/detail/$', views_student.StudentDetail.as_view(),

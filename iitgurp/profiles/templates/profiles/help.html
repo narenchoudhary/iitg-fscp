@@ -1,0 +1,78 @@
+{% extends 'base2.html' %}
+
+{% block title %}{% endblock %}
+
+{% block nav %}
+<nav>
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="{% url 'login' %}" class="brand-logo">Logo</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col l2 hide-on-med-and-down"></div>
+            <div class="col l8 m12">
+                <div class="section">
+
+                    <div class="row">
+                        <div class="col l3 m2 hide-on-small-and-down"></div>
+                        <div class="col l6 m8 s12">
+                            <ul class="tabs">
+                                <li class="tab col l6 m6 s6"><a href="#tab1">Faculties</a></li>
+                                <li class="tab col l6 m6 s6"><a href="#tab2">Students</a></li>
+                            </ul>
+                        </div>
+                        <div class="col l3 m2 hide-on-small-and-down"></div>
+                    </div>
+
+                    <div class="row">
+                        <div id="tab1" class="col s12">
+                            <div class="section">
+                                <h4>Frequently Asked Questions</h4>
+                                <div class="divider"></div>
+                                <div class="faq-block">
+                                    <div class="faq-que">
+                                        What login credentials should I use?
+                                    </div>
+                                    <div class="faq-ans">
+                                        Use your IITG web mail login credentials to login to the FSCP portal.
+                                    </div>
+                                </div>
+                                <div class="faq-block">
+                                    <div class="faq-que">
+                                        When I try to login, it throws 403 Forbidden CSRF Verification failed error.
+                                        Why ?
+                                    </div>
+                                    <div class="faq-ans">
+                                        You are probably already logged in in another tab. Refresh the login screen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab2" class="col s12">
+                            <div class="section">
+                                <h4>Frequently Asked Questions</h4>
+                                <div class="divider"></div>
+                                <div class="faq-block">
+                                    <div class="faq-que">
+                                        What login credentials should I use?
+                                    </div>
+                                    <div class="faq-ans">
+                                        Use your IITG web mail login credentials to login to the FSCP portal.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col l2 hide-on-med-and-down"></div>
+        </div>
+    </div>
+{% endblock %}

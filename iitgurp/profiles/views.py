@@ -62,3 +62,14 @@ class LogoutView(View):
     def get(self, request):
         auth.logout(request=request)
         return redirect('login')
+
+
+class HelpPageView(View):
+    """
+    View that handles help page rendering.
+    """
+    http_method_names = ['get', 'head', 'options']
+    template_name = 'profiles/help.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
