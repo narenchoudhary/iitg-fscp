@@ -14,12 +14,6 @@ class WebMailAuthenticationBackend(object):
     def authenticate(self, **credentials):
         username = credentials.get('username', None)
         password = credentials.get('password', None)
-
-        from django.contrib import auth
-        user = auth.authenticate(username=username, password=password)
-        if username is not None:
-            return user
-
         server = credentials.get('server', None)
         port = credentials.get('port', None)
         try:

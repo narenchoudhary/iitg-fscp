@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.9/topics/auth/customizing/
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    # 'profiles.auth.WebMailAuthenticationBackend',
+    'profiles.auth.WebMailAuthenticationBackend',
 ]
 
 # Internationalization

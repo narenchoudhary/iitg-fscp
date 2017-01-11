@@ -28,20 +28,21 @@ class LoginView(View):
 
     def post(self, request):
         redirect_to = request.POST.get('next', self.next)
-        print(redirect_to)
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             server = form.cleaned_data.get('login_server')
 
-            user = auth.authenticate(username=username, password=password)
+            user = auth.authenticate(username=username, password=password,
+                                     server=server, port=self.port)
             if user is not None:
-                auth.login(request=request, user=user)
                 if not is_safe_url(url=redirect_to, host=request.get_host()):
                     if user.user_type == 'faculty':
+                        auth.login(request=request, user=user)
                         return redirect('fac-home')
                     elif user.user_type == 'student':
+                        auth.login(request=request, user=user)
                         return redirect('stud-home')
                     else:
                         form.add_error(None, 'No such user exists.')
