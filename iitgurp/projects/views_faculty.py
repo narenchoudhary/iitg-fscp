@@ -178,8 +178,7 @@ class SkillList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 class SkillCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     login_url = reverse_lazy('login')
-    model = Skill
-    fields = '__all__'
+    form_class = SkillForm
     template_name = 'projects/faculty/skill_create.html'
 
     def test_func(self):

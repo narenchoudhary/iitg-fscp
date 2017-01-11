@@ -26,10 +26,14 @@
                     A tag is a keyword or label that categorizes your project
                     with other, similar projects. Using the right tags makes
                     it easier for students to find your project.
-                    <br>
-                    New tags can be created <a>here</a>. Please do not create
-                    duplicate tags.
                 </p>
+                <p>
+                    New tags can be created
+                    <a href="{% url 'projects:fac-skill-create' %}">
+                        <strong>here</strong>
+                    </a>.
+                </p>
+                <p>Please do not create duplicate tags.</p>
                 <div class="divider" style="margin-bottom: 10px"></div>
                 {% for skill in skill_list %}
                     <div class="row model-field">

@@ -39,7 +39,7 @@ class ProjectSearchForm(forms.ModelForm):
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill
-        fields = '__all__'
+        fields = ['name', 'description']
         widgets = {
             'description': forms.Textarea(attrs={
                 'class': 'materialize-textarea',
