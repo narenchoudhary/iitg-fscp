@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 from .constants import *
 
@@ -32,6 +33,9 @@ class Student(models.Model):
     )
     roll_no = models.DecimalField(
         max_digits=10, decimal_places=0, unique=True, null=False, blank=False)
+    bio = models.CharField(
+        max_length=300, blank=True, null=True, verbose_name='Bio',
+        help_text=_('Write a bio that reflects your interests.'))
     year_of_admission = models.IntegerField(
         null=False, blank=False, verbose_name='Year of Admission',
         validators=[MinValueValidator(2012), ])

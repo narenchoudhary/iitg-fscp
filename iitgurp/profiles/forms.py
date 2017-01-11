@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from .constants import LOGIN_SERVER, DEPARTMENT
+from .models import Student
 
 
 class LoginForm(forms.Form):
@@ -33,3 +34,14 @@ class FacultySearchForm(forms.Form):
 class StudentSearch(forms.Form):
     full_name = forms.CharField(max_length=50, required=True,
                                 help_text='Name or part of name')
+
+
+class StudentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['bio', 'hostel', 'room_no', 'mobile_campus',
+                  'alternate_email', 'year_of_admission', 'department',
+                  'discipline', 'programme']
+        widgets = {'bio': forms.Textarea(attrs={
+            'class': 'materialize-textarea'
+        })}
