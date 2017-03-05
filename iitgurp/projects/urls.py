@@ -28,6 +28,9 @@ urlpatterns = [
         views_faculty.SkillDetail.as_view(), name='fac-skill-detail'),
     url(r'^faculty/tag/(?P<pk>\d+)/update/$',
         views_faculty.SkillUpdate.as_view(), name='fac-skill-update'),
+    url(r'faculty/project-stud-rel/(?P<relid>\d+)/update/(?P<action>\d+)/$',
+        views_faculty.ProjectStudRelUpdate.as_view(),
+        name='fac-proj-stud-rel-update'),
 
     url(r'^student/projects/list/$',
         views_student.ProjectList.as_view(), name='stud-project-list'),

@@ -97,11 +97,14 @@ class ProjectStudentRelation(models.Model):
     creation_datetime = models.DateTimeField(null=False, blank=False)
     last_updated = models.DateTimeField(null=True, blank=True)
     # shortlist status
-    is_shortlisted = models.NullBooleanField(default=None, blank=False)
+    shortlist_status = models.NullBooleanField(default=None, blank=False)
     shortlist_datetime = models.DateTimeField(null=True, blank=True)
     # completion status
-    is_completed = models.NullBooleanField(default=None, blank=False)
+    completion_status = models.NullBooleanField(default=None, blank=False)
     completion_datetime = models.DateTimeField(null=True, blank=True)
+    # abandon status
+    abandon_status = models.NullBooleanField(default=None, blank=False)
+    abandon_datetime = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['last_updated']
@@ -112,9 +115,9 @@ class ProjectStudentRelation(models.Model):
 
     @property
     def status(self):
-        if self.is_completed:
+        if self.completion_status:
             return 'Completed'
-        elif self.is_shortlisted:
+        elif self.shortlist_status:
             return 'Shortlisted/Ongoing'
         else:
             return '---'

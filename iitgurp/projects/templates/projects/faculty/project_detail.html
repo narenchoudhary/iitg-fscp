@@ -91,38 +91,62 @@
                         </p>
                     {% else %}
                         <p>
-                            <strong>Note: </strong> Clicking mail button in the table below will
-                            open your default mail application with following body.
+                            <strong>Note: </strong> Clicking <strong>MAIL</strong> button in the table below will
+                            open your default mail application (Eg. Thunderbird, Outlook, Mailbird, etc.)
+                            with <strong>Recepient</strong> and <strong>Subject</strong> already filled.
                         </p>
-                        <blockquote>
-                            Hello student_name,
-                            <br>
-                            This mail is a confirmation of your selection to
-                        </blockquote>
-                        <p>You can edit the mail body before sending it to the student.</p>
+                        <p>You can update the mail body before sending it to the student.</p>
                         <div class="divider bottom10"></div>
                         <table class="table responsive-table centered">
                             <thead>
                                 <tr>
-                                    <th>Sr. No</th>
                                     <th>Name</th>
-                                    <th>Web Mail</th>
-                                    <th>Status</th>
-                                    <th>Mail</th>
                                     <th>Detail</th>
+                                    <th>Mail</th>
+                                    <th>Shortlist/Undo Shortlist</th>
+                                    <th>Mark Completed</th>
+                                    <th>Mark Abandoned</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for stud_rel in stud_rel_list %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ stud_rel.student.full_name }}</td>
-                                        <td>{{ stud_rel.student.web_mail }}</td>
-                                        <td>{{ stud_rel.status }}</td>
-                                        <td><a class="btn">Mail</a></td>
+                                        <td>
+                                            {{ stud_rel.student.full_name }}
+                                            <br>
+                                            {{ stud_rel.student.roll_no }}
+                                            <br>
+                                            {{ stud_rel.student.web_mail }}
+                                        </td>
                                         <td>
                                             <a href="{% url 'fac-student-detail' stud_rel.student.id %}"
                                                class="btn-xs btn" >Detail</a>
+                                        </td>
+                                        <td><a class="btn">Mail</a></td>
+                                        <td>
+                                            {% if stud_rel.shortlist_status %}
+                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 2 %}"
+                                                   class="btn">Undo Shortlist</a>
+                                            {% else %}
+                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 1 %}"
+                                                   class="btn">Shortlist</a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if stud_rel.shortlist_status %}
+                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 3 %}"
+                                                   class="btn">Mark Completed</a>
+                                            {% else %}
+                                                <a class="btn disabled">Mark Completed</a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if stud_rel.shortlist_status %}
+                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 4 %}"
+                                                   class="btn">Mark Abandoned</a>
+                                            {% else %}
+                                                <a class="btn disabled">Mark Abandoned</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
