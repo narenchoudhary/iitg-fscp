@@ -52,7 +52,7 @@ class FacultyUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = reverse_lazy('login')
     template_name = 'profiles/faculty/faculty_update.html'
     model = Faculty
-    fields = ['web_mail', 'department', 'room_no']
+    fields = ['web_mail', 'homepage_url', 'department', 'room_no']
     success_url = reverse_lazy('fac-detail')
 
     def test_func(self):

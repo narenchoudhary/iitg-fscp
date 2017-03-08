@@ -77,6 +77,8 @@ class Faculty(models.Model):
         limit_choices_to={'user_type': 'faculty'}
     )
     web_mail = models.EmailField(null=True, blank=False)
+    homepage_url = models.URLField(null=True, blank=True,
+                                   verbose_name='URL of Homepage')
     full_name = models.CharField(max_length=100, null=True, blank=False)
     department = models.CharField(max_length=100, choices=DEPARTMENT,
                                   null=True, blank=True)

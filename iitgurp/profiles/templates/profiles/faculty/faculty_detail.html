@@ -40,6 +40,14 @@
                 </div>
                 <div class="row model-field">
                     <div class="col l2 m3 s4 field-name">
+                        URl of Homepage
+                    </div>
+                    <div class="col l10 m9 s8 field-value">
+                        {{ fac.homepage_url | default_if_none:""}}
+                    </div>
+                </div>
+                <div class="row model-field">
+                    <div class="col l2 m3 s4 field-name">
                         Department
                     </div>
                     <div class="col l10 m9 s8 field-value">
