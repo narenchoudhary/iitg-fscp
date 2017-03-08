@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404, render
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import (CreateView, DetailView, FormView, ListView,
@@ -12,8 +12,7 @@ from export_csv.views import ExportCSV
 
 from profiles.models import Faculty
 
-from .forms import (ProjectCreateForm, ProjectSearchForm, SkillForm,
-                    ApplicantStatusForm)
+from .forms import ProjectCreateForm, ProjectSearchForm, SkillForm
 from .models import Project, ProjectStudentRelation, Skill
 
 
@@ -22,11 +21,18 @@ class ProjectCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     View class which handles Project creation
     """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     object = None
     form_class = ProjectCreateForm
     template_name = 'projects/faculty/project_create.html'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def form_valid(self, form):
@@ -40,7 +46,7 @@ class ProjectCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         self.object = form.save()
         self.object.faculty = faculty
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse_lazy('projects:fac-project-detail',
@@ -52,12 +58,19 @@ class ProjectUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     View class which handles Project updates
     """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     model = Project
     form_class = ProjectCreateForm
     template_name = 'projects/faculty/project_update.html'
 
     def test_func(self):
-        print(self.object)
+        """
+        Only request by faculty users who created the Project being updated
+        should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         is_faculty = self.request.user.user_type == 'faculty'
         if not is_faculty:
             return False
@@ -80,10 +93,17 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     View class which renders list of Projects
     """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     template_name = 'projects/faculty/project_list.html'
     context_object_name = 'project_list'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def get_queryset(self):
@@ -97,11 +117,19 @@ class ProjectDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     View class which renders details of a Project
     """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     model = Project
     template_name = 'projects/faculty/project_detail.html'
     context_object_name = 'project'
 
     def test_func(self):
+        """
+        Only request by faculty users who created the Project being displayed
+        should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         is_faculty = self.request.user.user_type == 'faculty'
         if not is_faculty:
             return False
@@ -115,19 +143,35 @@ class ProjectDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         return True
 
     def get_context_data(self, **kwargs):
+        """
+        Custom get_context_data method to add student applications to the context.
+        :param kwargs: Keyword arguments
+        :return: Context
+        :rtype: dict
+        """
         context = super(ProjectDetail, self).get_context_data(**kwargs)
         context['stud_rel_list'] = ProjectStudentRelation.objects.filter(
             project=self.object
-        )
+        ).select_related('student')
         return context
 
 
 class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
+    """
+    View class which handles searching Projects for faculty users.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     template_name = 'projects/faculty/project_search.html'
     form_class = ProjectSearchForm
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def form_valid(self, form):
@@ -146,12 +190,22 @@ class SearchProject(LoginRequiredMixin, UserPassesTestMixin, FormView):
 
 
 class ProjectSearchDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    View class which handles rendering details of Project from search results.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     template_name = 'projects/faculty/project_search_detail.html'
     model = Project
     context_object_name = 'project'
 
     def test_func(self):
+        """
+         Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def get_context_data(self, **kwargs):
@@ -170,21 +224,41 @@ class ProjectListCSV(ExportCSV):
 
 
 class SkillList(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    View class which handles rendering list of Skill instances.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     model = Skill
     template_name = 'projects/faculty/skill_list.html'
     context_object_name = 'skill_list'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
 
 class SkillCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    View class which handles creating new Skill instances.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     form_class = SkillForm
     template_name = 'projects/faculty/skill_create.html'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def get_success_url(self):
@@ -193,12 +267,22 @@ class SkillCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 class SkillDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    View class which handles rendering details of a Skill instance.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     model = Skill
     template_name = 'projects/faculty/skill_detail.html'
     context_object_name = 'skill'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def get_context_data(self, **kwargs):
@@ -209,12 +293,22 @@ class SkillDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 
 class SkillUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    View class which handles updating an existing Skill instance.
+    """
     login_url = reverse_lazy('login')
+    # Instead of raising PermissionDenied exception, redirect to login page.
+    raise_exception = False
     model = Skill
     form_class = SkillForm
     template_name = 'projects/faculty/skill_update.html'
 
     def test_func(self):
+        """
+        Only request by faculty users should be allowed.
+        :return: True if test passed otherwise False
+        :rtype: bool
+        """
         return self.request.user.user_type == 'faculty'
 
     def get_success_url(self):
@@ -227,12 +321,15 @@ class ProjectStudRelUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
     View class which handles updating ProjectStudentRelation instances by faculty users.
 
     Four update operations are possible:
-    1. Shortlist
-    2. Undo shortlist
-    3.
+    1. Mark Shortlisted
+    2. Undo Shortlisted
+    3. Mark Completed
+    4. Mark Abandoned
+
+    ``action`` parameter passed in ``url`` us used to run correct update operation.
     """
     login_url = reverse_lazy('login')
-    # Instead of raising PermissionDenied error, redirect to login page.
+    # Instead of raising PermissionDenied exception, redirect to login page.
     raise_exception = False
     template_name = 'projects/faculty/project_detail.html'
     http_method_names = ['get', 'options', 'head']

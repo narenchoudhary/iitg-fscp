@@ -7,6 +7,9 @@ from .models import Student
 
 
 class LoginForm(forms.Form):
+    """
+    Login Form
+    """
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput)
     login_server = forms.ChoiceField(required=True, choices=LOGIN_SERVER)
@@ -21,6 +24,9 @@ class LoginForm(forms.Form):
 
 
 class FacultySearchForm(forms.Form):
+    """
+    Form for searching Faculty instances.
+    """
     DEPARTMENT_BLANK = DEPARTMENT + [('', '-----')]
     full_name = forms.CharField(max_length=50, required=True,
                                 label='Name of Faculty',
@@ -32,11 +38,17 @@ class FacultySearchForm(forms.Form):
 
 
 class StudentSearch(forms.Form):
+    """
+    For for searching Student instances.
+    """
     full_name = forms.CharField(max_length=50, required=True,
                                 help_text='Name or part of name')
 
 
 class StudentUpdateForm(forms.ModelForm):
+    """
+    Form for updating Student instances.
+    """
     class Meta:
         model = Student
         fields = ['bio', 'hostel', 'room_no', 'mobile_campus',
