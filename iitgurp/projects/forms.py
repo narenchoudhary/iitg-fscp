@@ -23,7 +23,8 @@ class ProjectCreateForm(forms.ModelForm):
                 'class': 'materialize-textarea',
             }),
             'requirements': forms.Textarea(attrs={
-                'class': 'materialize-textarea'
+                'class': 'materialize-textarea',
+                'placeholder': _('Example: CPI must be greater than 5. No active backlogs.')
             })
         }
         help_texts = {
@@ -39,7 +40,7 @@ class ProjectSearchForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'skills']
-        help_texts = {
+        labels = {
             'title': _('Title or part of title')
         }
 

@@ -32,8 +32,8 @@
                     <p>
                         This page lists all projects posted from this account.
                         <br>
-                        Click on
-                        DETAIL and UPDATE buttons to view details and modify project respectively.
+                        Click on <strong>DETAIL</strong> and <strong>UPDATE</strong>
+                        buttons to view details and modify project respectively.
                     </p>
                     <div class="divider bottom10"></div>
                     <table class="table responsive-table centered">
@@ -61,12 +61,12 @@
                                         {% endif%}
                                     </td>
                                     <td>
-                                        <a class="waves-effect waves-green" href="{% url 'projects:fac-project-detail' project.id %}">
+                                        <a class="btn waves-effect waves-green" href="{% url 'projects:fac-project-detail' project.id %}">
                                             Detail
                                         </a>
                                     </td>
                                     <td>
-                                        <a class="waves-effect waves-green" href="{% url 'projects:fac-project-update' project.id %}">
+                                        <a class="btn waves-effect waves-green" href="{% url 'projects:fac-project-update' project.id %}">
                                             Update
                                         </a>
                                     </td>

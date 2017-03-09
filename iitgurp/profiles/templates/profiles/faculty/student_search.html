@@ -28,9 +28,10 @@
                         <input class="btn btn-primary" type="submit" value="Search" />
                     </form>
                     <br>
-                    <div class="divider"></div>
                 </div>
+
                 {% if results and  stud_list.count < 1 %}
+                <div class="divider"></div>
                 <div class="section">
                     <h4 class="header">Search Results</h4>
                     <div class="divider"></div>
@@ -40,6 +41,7 @@
                 {% endif %}
 
                 {% if stud_list.count > 0 %}
+                <div class="divider"></div>
                 <div class="section">
                     <h5 class="header">Search Results</h5>
                     <div class="divider" style="margin-bottom: 10px"></div>
@@ -69,6 +71,7 @@
                     </table>
                 </div>
                 {% endif %}
+
             </div>
         </div>
     </div>

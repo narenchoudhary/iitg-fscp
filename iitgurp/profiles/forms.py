@@ -29,8 +29,7 @@ class FacultySearchForm(forms.Form):
     """
     DEPARTMENT_BLANK = DEPARTMENT + [('', '-----')]
     full_name = forms.CharField(max_length=50, required=True,
-                                label='Name of Faculty',
-                                help_text='Type name or part of name')
+                                label=_('Full name or part of name'))
     department = forms.ChoiceField(choices=DEPARTMENT_BLANK,
                                    required=False, initial='',
                                    widget=forms.Select()
@@ -42,7 +41,7 @@ class StudentSearch(forms.Form):
     For for searching Student instances.
     """
     full_name = forms.CharField(max_length=50, required=True,
-                                help_text='Name or part of name')
+                                label=_('Full name or part of name'))
 
 
 class StudentUpdateForm(forms.ModelForm):

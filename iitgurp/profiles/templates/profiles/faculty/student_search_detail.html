@@ -44,7 +44,7 @@
                             Bio
                         </div>
                         <div class="col l10 m9 s8 field-value">
-                            {{ stud.bio }}
+                            {{ stud.bio | default_if_none:""}}
                         </div>
                     </div>
                     <div class="divider"></div>
@@ -66,8 +66,8 @@
                 <div class="section">
                     <h4 class="header">Projects</h4>
                     <p>
-                        This student is either currently involved in or has
-                            been part of following projects in the past.
+                        This student is either <strong>currently involved in </strong> or
+                        <strong>has been part of </strong>following projects in the past.
 
                     </p>
                     <div class="divider"></div>
