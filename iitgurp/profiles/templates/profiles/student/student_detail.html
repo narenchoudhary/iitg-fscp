@@ -21,6 +21,9 @@
             <div class="col s12">
                 <div class="section">
                     <h4 class="header">Profile Detail</h4>
+                    {% if stud.last_updated %}
+                        <p>Your profile was last updated on {{stud.last_updated}}</p>
+                    {% endif %}
                     <div class="divider" style="margin-bottom: 10px"></div>
                     <div class="row model-field">
                         <div class="col l2 m3 s4 field-name">
