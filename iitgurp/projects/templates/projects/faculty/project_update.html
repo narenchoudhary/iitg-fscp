@@ -9,7 +9,7 @@
             <div class="nav-wrapper left">
                 <div class="col s12">
                     <a href="{% url 'fac-home' %}" class="breadcrumb">Home</a>
-                    <a href="{% url 'projects:fac-project-list' %}" class="breadcrumb">Project List</a>
+                    <a href="{% url 'projects:fac-project-list' 1 %}" class="breadcrumb">Project List</a>
                     <a class="breadcrumb">Project Update</a>
                 </div>
             </div>
@@ -23,13 +23,18 @@
             <div class="col s12">
                 <div class="section">
                     <h4>Update Existing Project</h4>
+                    {% if form.errors %}
+                        <p class="red-text">
+                            <strong>There are some errors in the form. Please correct them and submit again.</strong>
+                        </p>
+                    {% endif%}
                     <div class="divider" style="margin-bottom: 10px"></div>
                     <form method="post" action="">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="row">
                                 <div class="input-field col s12 l12 m12">
-                                    {{ field.errors }}
+                                    <span class="red-text">{{ field.errors }}</span>
                                     {{ field }}
                                     {{ field.label_tag }}
                                 </div>

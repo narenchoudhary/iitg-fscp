@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from .models import Project, Skill
@@ -30,6 +31,29 @@ class ProjectCreateForm(forms.ModelForm):
         help_texts = {
             'skills': _('Select at least one tag (for example: Machine Learning)')
         }
+
+    def clean(self):
+        super(ProjectCreateForm, self).clean()
+        start_date = self.cleaned_data.get("start_date")
+        end_date = self.cleaned_data.get("end_date")
+        closing_datetime = self.cleaned_data.get("closing_datetime")
+            
+        closing_date = closing_datetime.date()
+        if timezone.now() >= closing_datetime:
+            self.add_error(
+                'closing_datetime',
+                _('Closing Datetime must be a date in future.')
+            )
+        if closing_date >= start_date:
+            self.add_error(
+                'closing_datetime', 
+                _("Closing Datetime must be smaller than Tentative Start Date.")    
+            )
+        if start_date >= end_date:
+            self.add_error(
+                'start_date', 
+                _("Tentative Start Date must be smaller than Tentative End Date.")
+            )
 
 
 class ProjectSearchForm(forms.ModelForm):
