@@ -17,11 +17,11 @@
                         Projects<i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <ul id="projects" class="dropdown-content">
-                        <li><a href="{% url 'projects:fac-project-list' %}">Your projects</a></li>
+                        <li><a href="{% url 'projects:fac-project-list' 1 %}">Your projects</a></li>
                         <li><a href="{% url 'projects:fac-project-create' %}">Create new Project</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'projects:fac-skill-list' %}">Tags</a></li>
+                <li><a href="{% url 'projects:fac-skill-list' 1 %}">Tags</a></li>
                 <li>
                     <a class="dropdown-button" href="#" data-activates="searches">
                         Search<i class="material-icons right">arrow_drop_down</i>
@@ -44,7 +44,7 @@
                             </a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li><a href="{% url 'projects:fac-project-list' %}">Your projects</a></li>
+                                    <li><a href="{% url 'projects:fac-project-list' 1 %}">Your projects</a></li>
                                     <li><a href="{% url 'projects:fac-project-create' %}">Create new Project</a></li>
                                 </ul>
                             </div>

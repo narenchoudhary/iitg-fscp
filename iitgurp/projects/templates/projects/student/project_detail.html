@@ -8,7 +8,7 @@
         <div class="nav-wrapper left">
             <div class="col s12">
                 <a href="{% url 'stud-home' %}" class="breadcrumb">Home</a>
-                <a href="{% url 'projects:stud-project-list' %}" class="breadcrumb">Project List</a>
+                <a href="{% url 'projects:stud-project-list' 1 %}" class="breadcrumb">Project List</a>
                 <a class="breadcrumb">Project Detail</a>
             </div>
         </div>
@@ -36,7 +36,7 @@
                         Faculty
                     </div>
                     <div class="col l10 m9 s8 field-value">
-                        <a href="">{{ project.faculty.full_name }}</a>
+                        <a href="{% url 'stud-fac-detail' project.faculty.id %}">{{ project.faculty.full_name }}</a>
                     </div>
                 </div>
                 <div class="row model-field">

@@ -95,8 +95,12 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     login_url = reverse_lazy('login')
     # Instead of raising PermissionDenied exception, redirect to login page.
     raise_exception = False
+    # model = Project
     template_name = 'projects/faculty/project_list.html'
     context_object_name = 'project_list'
+    # If paginate_by is specified, Django will paginate the results 
+    # returned by this. 
+    paginate_by = 1
 
     def test_func(self):
         """
@@ -105,7 +109,7 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
         :rtype: bool
         """
         return self.request.user.user_type == 'faculty'
-
+    
     def get_queryset(self):
         return Project.objects.filter(
             faculty__user_profile__username=self.request.user.username
@@ -230,9 +234,13 @@ class SkillList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     login_url = reverse_lazy('login')
     # Instead of raising PermissionDenied exception, redirect to login page.
     raise_exception = False
-    model = Skill
+    # model = Skill
+    queryset = Skill.objects.all().order_by('name')
     template_name = 'projects/faculty/skill_list.html'
     context_object_name = 'skill_list'
+    # If paginate_by is specified, Django will paginate the results 
+    # returned by this. 
+    paginate_by = 10
 
     def test_func(self):
         """

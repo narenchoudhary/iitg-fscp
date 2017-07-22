@@ -32,8 +32,11 @@
                     <a href="{% url 'projects:fac-skill-create' %}">
                         <strong>here</strong>
                     </a>.
+                    <strong>
+                        Please do not create duplicate tags.
+                    </strong>
                 </p>
-                <p>Please do not create duplicate tags.</p>
+                <p>Click on tag to see all projects created with that tag.</p>
                 <div class="divider" style="margin-bottom: 10px"></div>
                 {% for skill in skill_list %}
                     <div class="row model-field">
@@ -47,6 +50,31 @@
                         </div>
                     </div>
                 {% endfor %}
+                {% if is_paginated %}
+                    <div>
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="waves-effect">
+                                    <a href="{% url 'projects:fac-skill-list' page_obj.previous_page_number %}"><i class="material-icons">chevron_left</i></a>
+                                </li>
+                            {% else %}
+                                <li class="disabled">
+                                    <a href="#!"><i class="material-icons">chevron_left</i></a>
+                                </li>
+                            {% endif %}
+                            <li class="active"><a href="#!">{{ page_obj.number }}</a></li>
+                            {% if page_obj.has_next %}
+                                <li class="waves-effect">
+                                    <a href="{% url 'projects:fac-skill-list' page_obj.next_page_number %}"><i class="material-icons">chevron_right</i></a>
+                                </li>
+                            {% else %}
+                                <li class="disabled">
+                                    <a href="#!"><i class="material-icons">chevron_right</i></a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

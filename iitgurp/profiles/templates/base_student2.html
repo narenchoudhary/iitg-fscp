@@ -17,7 +17,7 @@
                         Projects<i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <ul id="projects" class="dropdown-content">
-                        <li><a href="{% url 'projects:stud-project-list' %}">All Projects</a></li>
+                        <li><a href="{% url 'projects:stud-project-list' 1 %}">All Projects</a></li>
                         <li><a href="{% url 'projects:stud-project_stud_rel-list' %}">Your Projects</a></li>
                     </ul>
                 </li>
@@ -42,7 +42,7 @@
                             </a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li><a href="{% url 'projects:stud-project-list' %}">All Projects</a></li>
+                                    <li><a href="{% url 'projects:stud-project-list' 1 %}">All Projects</a></li>
                                     <li><a href="{% url 'projects:stud-project_stud_rel-list' %}">Your Projects</a></li>
                                 </ul>
                             </div>

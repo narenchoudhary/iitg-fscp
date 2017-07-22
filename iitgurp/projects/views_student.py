@@ -21,6 +21,9 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Project
     template_name = 'projects/student/project_list.html'
     context_object_name = 'project_list'
+    # If paginate_by is specified, Django will paginate the results
+    # returned by this. 
+    paginate_by = 30
 
     def test_func(self):
         return self.request.user.user_type == 'student'

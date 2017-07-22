@@ -7,8 +7,8 @@ from . import views_faculty, views_student
 urlpatterns = [
     url(r'^faculty/projects/create/$', views_faculty.ProjectCreate.as_view(),
         name='fac-project-create',),
-    url(r'^faculty/projects/list/$', views_faculty.ProjectList.as_view(),
-        name='fac-project-list'),
+    url(r'^faculty/projects/list/(?P<page>\d+)/$', 
+        views_faculty.ProjectList.as_view(), name='fac-project-list'),
     url(r'^faculty/projects/detail/(?P<pk>\d+)/$',
         views_faculty.ProjectDetail.as_view(), name='fac-project-detail'),
     url(r'^faculty/projects/update/(?P<pk>\d+)/$',
@@ -20,7 +20,7 @@ urlpatterns = [
         name='fac-project-search-detail'),
     url(r'faculty/projects/list/csv$', views_faculty.ProjectListCSV.as_view(),
         name='fac-project-list-csv'),
-    url(r'^faculty/tag/list/$', views_faculty.SkillList.as_view(),
+    url(r'^faculty/tag/list/(?P<page>\d+)/$', views_faculty.SkillList.as_view(),
         name='fac-skill-list'),
     url(r'^faculty/tag/create/$', views_faculty.SkillCreate.as_view(),
         name='fac-skill-create'),
@@ -32,7 +32,7 @@ urlpatterns = [
         views_faculty.ProjectStudRelUpdate.as_view(),
         name='fac-proj-stud-rel-update'),
 
-    url(r'^student/projects/list/$',
+    url(r'^student/projects/list/(?P<page>\d+)/$',
         views_student.ProjectList.as_view(), name='stud-project-list'),
     url(r'^student/projects/list/tag/(?P<pk>\d+)/$',
         views_student.ProjectListBySkill.as_view(),
