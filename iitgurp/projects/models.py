@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import smart_str, python_2_unicode_compatible
 from django.utils import timezone
+from django.utils.encoding import smart_str, python_2_unicode_compatible
+from django.utils.translation import ugettext as _
 
 
 from profiles.models import Faculty, Student
@@ -13,9 +14,13 @@ datetime_input_formats = ['%Y-%m-%d %H:%M']
 
 @python_2_unicode_compatible
 class Skill(models.Model):
-    name = models.CharField(unique=True, max_length=40, null=False, blank=False)
-    description = models.CharField(max_length=600, null=True,
-                                   blank=False)
+    name = models.CharField(unique=True, max_length=40, null=False, blank=False, help_text=_("Example: Machine Learning"))
+    description = models.CharField(
+            max_length=600, null=True, blank=False, 
+            help_text=_("Example: Machine learning revolves around developing "
+            "self-learning computer algorithms that function by virtue of "
+            "discovering patterns in data and making intelligent decisions "
+            "based on such patterns."))
     created_on = models.DateTimeField(null=False, blank=True)
     last_updated_on = models.DateTimeField(null=False, blank=True)
 

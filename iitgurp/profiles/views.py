@@ -34,8 +34,9 @@ class LoginView(View):
             password = form.cleaned_data.get('password')
             server = form.cleaned_data.get('login_server')
 
-            user = auth.authenticate(username=username, password=password,
-                                     server=server, port=self.port)
+            user = auth.authenticate(username=username, password=password)
+            # user = auth.authenticate(username=username, password=password,
+            #                          server=server, port=self.port)
             if user is not None:
                 if not is_safe_url(url=redirect_to, host=request.get_host()):
                     if user.user_type == 'faculty':

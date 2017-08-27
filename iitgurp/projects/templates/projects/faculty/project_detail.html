@@ -96,12 +96,18 @@
                             with <strong>Recepient</strong> and <strong>Subject</strong> already filled.
                         </p>
                         <p>You can update the mail body before sending it to the student.</p>
+                        <p>
+                            Please note that you can
+                            <strong>Shortlist</strong> and <strong>Undo-shortlist</strong> a student
+                            any number of times. However, a student can be <strong>Mark Completed</strong> or
+                            <strong>Mark Abandoned</strong> only once. Once marked completed, the status of student
+                            in a project cannot be changed.
+                        </p>
                         <div class="divider bottom10"></div>
                         <table class="table responsive-table centered">
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Detail</th>
                                     <th>Mail</th>
                                     <th>Shortlist/Undo Shortlist</th>
                                     <th>Mark Completed</th>
@@ -112,21 +118,23 @@
                                 {% for stud_rel in stud_rel_list %}
                                     <tr>
                                         <td>
-                                            {{ stud_rel.student.full_name }}
+                                            <a href="{% url 'fac-student-detail' stud_rel.student.id %}">
+                                                {{ stud_rel.student.full_name }}
+                                            </a>
                                             <br>
                                             {{ stud_rel.student.roll_no }}
                                             <br>
                                             {{ stud_rel.student.web_mail }}
                                         </td>
+                                        <td><a class="btn" href="mailto:{{ stud_rel.student.web_mail }}">Mail</a></td>
                                         <td>
-                                            <a href="{% url 'fac-student-detail' stud_rel.student.id %}"
-                                               class="btn-xs btn" >Detail</a>
-                                        </td>
-                                        <td><a class="btn">Mail</a></td>
-                                        <td>
-                                            {% if stud_rel.shortlist_status %}
-                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 2 %}"
-                                                   class="btn">Undo Shortlist</a>
+                                            {% if stud_rel.shortlist_status%}
+                                                {% if stud_rel.completion_status %}
+                                                        <a class="btn disabled">Undo Shortlist</a>
+                                                    {% else %}
+                                                        <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 2 %}"
+                                                        class="btn">Undo Shortlist</a>
+                                                    {% endif %}
                                             {% else %}
                                                 <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 1 %}"
                                                    class="btn">Shortlist</a>
@@ -134,16 +142,28 @@
                                         </td>
                                         <td>
                                             {% if stud_rel.shortlist_status %}
-                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 3 %}"
-                                                   class="btn">Mark Completed</a>
+                                                {% if stud_rel.completion_status %}
+                                                    <a class="btn green">Completed</a>
+                                                {% elif stud_rel.abandon_status %}
+                                                    <a class="btn disabled">Mark Completed</a>
+                                                {% else %}
+                                                    <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 3 %}"
+                                                       class="btn">Mark Completed</a>
+                                                {% endif %}
                                             {% else %}
                                                 <a class="btn disabled">Mark Completed</a>
                                             {% endif %}
                                         </td>
                                         <td>
                                             {% if stud_rel.shortlist_status %}
-                                                <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 4 %}"
-                                                   class="btn">Mark Abandoned</a>
+                                                {% if stud_rel.abandon_status %}
+                                                    <a class="btn red">Abandoned</a>
+                                                {% elif stud_rel.completion_status %}
+                                                    <a class="btn disabled">Mark Abandoned</a>
+                                                {% else %}
+                                                    <a href="{% url 'projects:fac-proj-stud-rel-update' stud_rel.id 4 %}"
+                                                        class="btn">Mark Abandoned</a>
+                                                {% endif %}
                                             {% else %}
                                                 <a class="btn disabled">Mark Abandoned</a>
                                             {% endif %}

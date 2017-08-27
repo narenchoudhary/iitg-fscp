@@ -21,7 +21,11 @@
         <div class="col l12 m12 s12">
             <div class="section">
                 <h4 class="header">Profile Details</h4>
+                {% if fac.last_updated %}
+                    <p>Profile was last updated on {{fac.last_updated}}</p>
+                {% endif %}
                 <div class="divider"></div>
+                <br>
                 <div class="row model-field">
                     <div class="col l2 m3 s4 field-name">
                         Name
@@ -62,15 +66,12 @@
                         {{ fac.room_no }}
                     </div>
                 </div>
+            </div>
+            <div class="section">
+                <h4 class="header">Update Profile</h4>
+                <p>Click the button below to update profile informaton displayed above.</p>
                 <div class="divider"></div>
-                <div class="row model-field">
-                    <div class="col l2 m3 s4 field-name">
-                        Last Updated on
-                    </div>
-                    <div class="col l10 m9 s8 field-value">
-                        {{ fac.last_updated }}
-                    </div>
-                </div>
+                <br>
                 <div class="row model-field">
                     <div class="col">
                         <a href="{% url 'fac-update' %}" class="btn waves-effect waves-light">Update Profile</a>

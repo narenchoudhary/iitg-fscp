@@ -100,7 +100,7 @@ class ProjectList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'project_list'
     # If paginate_by is specified, Django will paginate the results 
     # returned by this. 
-    paginate_by = 1
+    paginate_by = 20
 
     def test_func(self):
         """
@@ -240,7 +240,7 @@ class SkillList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'skill_list'
     # If paginate_by is specified, Django will paginate the results 
     # returned by this. 
-    paginate_by = 10
+    paginate_by = 20
 
     def test_func(self):
         """
@@ -420,7 +420,7 @@ class ProjectStudRelUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
                 'project').get(id=relid)
         except ProjectStudentRelation.DoesNotExist:
             raise Http404
-        # Cast to integer becuase action is read as character.
+        # Cast to integer because action is read as character.
         action = int(action)
         if action == 1:
             ProjectStudRelUpdate.shortlist(rel)
@@ -438,4 +438,5 @@ class ProjectStudRelUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
         stud_rel_list = ProjectStudentRelation.objects.filter(
             id=project.id).select_related('student')
         context = dict(project=project, stud_rel_list=stud_rel_list)
-        return render(request, self.template_name, context)
+        # return render(request, self.template_name, context)
+        return redirect('projects:fac-project-detail', pk=project.id)
